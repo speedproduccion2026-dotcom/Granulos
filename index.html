@@ -740,4 +740,1635 @@
 
         /* =============================================================
            REGLAS DE IMPRESIÓN PARA ETIQUETA FÍSICA DE 90 mm x 90 mm
-           ======================
+           ============================================================= */
+        @media print {
+            @page {
+                size: 90mm 90mm;
+                margin: 0;
+            }
+            body * {
+                visibility: hidden;
+            }
+            #printable-label-area, #printable-label-area * {
+                visibility: visible;
+            }
+            #printable-label-area {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 90mm !important;
+                height: 90mm !important;
+                max-width: 90mm !important;
+                max-height: 90mm !important;
+                border: 2px solid #000000 !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado con Navegación y Conector de Nube -->
+    <header>
+        <div class="header-container">
+            <div class="brand-title">
+                <div class="brand-icon">PG</div>
+                <div class="brand-text">
+                    <h1>Proceso de Granulo</h1>
+                    <p>Sistema Industrial, Etiqueta 90x90, Secado y Nube</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="nav-tabs">
+                    <button class="tab-btn active" onclick="switchTab('tab-granulo')">
+                        <span>1. Gránulo & Etiqueta</span>
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('tab-secado')">
+                        <span>2. Secado</span>
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('tab-dashboard')">
+                        <span>3. Dashboard</span>
+                    </button>
+                </div>
+
+                <button onclick="openCloudModal()" class="btn btn-secondary btn-small">
+                    <span>Base de Datos / Nube</span>
+                    <span id="cloud-status-badge" class="badge badge-warning">Solo Local</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main>
+
+        <!-- =========================================================
+             PESTAÑA 1: REGISTRO DE GRÁNULO Y ETIQUETA (90x90 MM)
+             ========================================================= -->
+        <div id="tab-granulo" class="tab-content active grid-2-cols">
+
+            <!-- Panel Izquierdo: Formulario 6 Variables -->
+            <section class="card">
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span>Registro de Gránulo</span>
+                        </h2>
+                        <span class="badge">6 Variables</span>
+                    </div>
+
+                    <form id="granulo-form" class="form-grid">
+                        <div class="form-grid form-grid-2">
+                            <!-- 1. Código -->
+                            <div class="form-group">
+                                <label for="codigo">1. Código del Producto *</label>
+                                <div class="input-group">
+                                    <input type="text" id="codigo" required placeholder="Ej: PA6-01" style="font-family: monospace; text-transform: uppercase;">
+                                    <button type="button" onclick="generateRandomCodigo()" class="btn btn-secondary btn-small" style="position: absolute; right: 4px; padding: 6px 8px;">
+                                        Generar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 2. Kilos Netos -->
+                            <div class="form-group">
+                                <label for="kilos-netos">2. Kilos Netos (KG) *</label>
+                                <div class="input-group">
+                                    <input type="number" id="kilos-netos" required step="0.01" min="0.01" placeholder="Ej: 25.50" style="font-weight: 700; font-family: monospace;">
+                                    <span class="input-unit">KG</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Color / Material PA6 -->
+                        <div class="form-group">
+                            <label for="color-select">3. Color / Material PA6 *</label>
+                            <div class="color-select-container">
+                                <div id="form-color-swatch" class="color-swatch" style="background-color: #FACC15;"></div>
+                                <select id="color-select" required style="font-weight: 600;">
+                                    <!-- Cargado por JS -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-grid form-grid-3">
+                            <!-- 4. Fecha -->
+                            <div class="form-group">
+                                <label for="fecha">4. Fecha *</label>
+                                <input type="date" id="fecha" required>
+                            </div>
+
+                            <!-- 5. Operador -->
+                            <div class="form-group">
+                                <label for="operador">5. Operador *</label>
+                                <select id="operador" required>
+                                    <option value="vlenan">vlenan</option>
+                                    <option value="fmiguelleto">fmiguelleto</option>
+                                </select>
+                            </div>
+
+                            <!-- 6. Tiempo Correcto -->
+                            <div class="form-group">
+                                <label for="tiempo-correcto">6. Tiempo Correcto *</label>
+                                <select id="tiempo-correcto" required>
+                                    <option value="6 horas">6 horas</option>
+                                    <option value="8 horas">8 horas</option>
+                                    <option value="12 horas">12 horas</option>
+                                    <option value="24 horas">24 horas</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+                            <button type="button" onclick="resetForm()" class="btn btn-secondary">Limpiar</button>
+                            <button type="submit" class="btn btn-primary">Registrar Gránulo</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Panel Derecho: Etiqueta 90mm x 90mm -->
+            <section class="card">
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <span>Etiqueta 90 mm x 90 mm</span>
+                        </h2>
+                        <span class="badge" style="background-color: #f1f5f9; color: #475569;">Cuadrada 1:1</span>
+                    </div>
+
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+                        Vista previa proporcional con código de barras Code 128 listo para escáners.
+                    </p>
+
+                    <!-- Etiqueta Cuadrada 90x90 mm -->
+                    <div class="label-wrapper">
+                        <div id="printable-label-area">
+                            <div id="preview-color-banner" class="label-banner" style="background-color: #FACC15; color: #0f172a;">
+                                <span>PROCESO DE GRANULO</span>
+                                <span style="font-size: 9px;">90x90 MM</span>
+                            </div>
+
+                            <div class="label-top-block">
+                                <div>
+                                    <div class="label-material-sub">
+                                        <span id="preview-color-dot" class="tag-dot" style="background-color: #FACC15;"></span>
+                                        <span>MATERIAL / COLOR</span>
+                                    </div>
+                                    <div id="preview-color" class="label-material-title">Gránulos Reciclados -PA6- JAF</div>
+                                    <div class="label-material-sub" style="margin-top: 4px;">CÓDIGO:</div>
+                                </div>
+                                <div id="preview-big-codigo" class="label-code-big">PA6-01</div>
+                            </div>
+
+                            <div class="label-divider"></div>
+
+                            <div class="label-mid-block">
+                                <div class="label-kilos-box">
+                                    <span style="font-size: 8px; font-weight: 800; color: #64748b; text-transform: uppercase;">NET KG / NETO:</span>
+                                    <div style="display: flex; align-items: baseline; gap: 2px; margin-top: 2px;">
+                                        <span id="preview-kilos" class="label-kilos-val">25.50</span>
+                                        <span style="font-size: 11px; font-weight: 900;">KG</span>
+                                    </div>
+                                    <div style="font-size: 9px; font-weight: 800; color: #475569; margin-top: 4px;">VERIFICADO ✓</div>
+                                </div>
+
+                                <div class="label-barcode-box">
+                                    <div class="barcode-svg-container">
+                                        <svg id="live-barcode-svg" style="width: 100%; height: 100%; overflow: visible;"></svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="label-bot-block">
+                                <div class="label-bot-col">
+                                    <span class="label-bot-lbl">FECHA</span>
+                                    <span id="preview-fecha" class="label-bot-val">2026-11-20</span>
+                                </div>
+                                <div class="label-bot-col">
+                                    <span class="label-bot-lbl">OPERADOR</span>
+                                    <span id="preview-operador" class="label-bot-val">vlenan</span>
+                                </div>
+                                <div class="label-bot-col">
+                                    <span class="label-bot-lbl">TIEMPO CORRECTO</span>
+                                    <span id="preview-tiempo" class="label-bot-val">8 horas</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 16px;">
+                    <button onclick="downloadLabelPNG()" class="btn btn-secondary btn-small" title="Descargar archivo de imagen PNG (300 DPI)">
+                        Descargar PNG
+                    </button>
+                    <button onclick="sendLabelByEmail()" class="btn btn-email btn-small" title="Descarga imagen y abre cliente de correo con asunto preconfigurado">
+                        Enviar por Correo
+                    </button>
+                    <button onclick="window.print()" class="btn btn-secondary btn-small" title="Imprimir en impresora térmica 90x90mm">
+                        Imprimir
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tabla de Gránulos Registrados -->
+            <section class="card full-width-section">
+                <div class="table-controls">
+                    <div>
+                        <h2 class="card-title">
+                            <span>Gránulos Registrados</span>
+                            <span id="records-count-badge" class="badge">0</span>
+                        </h2>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div class="search-box">
+                            <input type="text" id="search-input" onkeyup="renderTable()" placeholder="Buscar código, color, operador...">
+                        </div>
+                        <button onclick="exportToCSV()" class="btn btn-secondary btn-small">Exportar CSV</button>
+                        <button onclick="confirmClearAll()" class="btn btn-outline-danger btn-small">Vaciar Lista</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">Código de Barras</th>
+                                <th>Código</th>
+                                <th>Color / Material PA6</th>
+                                <th style="text-align: right;">Kilos Netos</th>
+                                <th>Fecha</th>
+                                <th>Operador</th>
+                                <th>Tiempo Correcto</th>
+                                <th style="text-align: right;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records-tbody">
+                            <!-- Filas dinámicas -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="empty-state" class="hidden" style="text-align: center; padding: 30px 16px;">
+                    <h3 style="font-size: 14px; font-weight: 700;">No hay gránulos registrados</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px; margin-bottom: 12px;">Registra un nuevo producto o carga los datos de ejemplo.</p>
+                    <button onclick="loadSampleData()" class="btn btn-secondary btn-small">Cargar Ejemplo</button>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- =========================================================
+             PESTAÑA 2: PROCESO DE SECADO (4 MÁQUINAS)
+             ========================================================= -->
+        <div id="tab-secado" class="tab-content">
+            
+            <!-- 4 Tarjetas de Máquinas de Secado -->
+            <section class="full-width-section">
+                <h2 class="card-title" style="margin-bottom: 14px;">Estado de Máquinas de Secado</h2>
+                <div class="dryers-grid">
+                    <!-- Secador 1 -->
+                    <div class="dryer-card" onclick="selectDryer('Secador 1')">
+                        <div class="dryer-header">
+                            <span class="dryer-name">Secador 1</span>
+                            <span id="status-dot-Secador 1" class="dryer-status-dot status-idle"></span>
+                        </div>
+                        <div id="dryer-info-Secador 1" class="dryer-info">
+                            <span class="badge badge-success">DISPONIBLE</span>
+                            <span style="font-size: 11px; margin-top: 4px;">Sin material cargado</span>
+                        </div>
+                    </div>
+
+                    <!-- Secador 2 -->
+                    <div class="dryer-card" onclick="selectDryer('Secador 2')">
+                        <div class="dryer-header">
+                            <span class="dryer-name">Secador 2</span>
+                            <span id="status-dot-Secador 2" class="dryer-status-dot status-idle"></span>
+                        </div>
+                        <div id="dryer-info-Secador 2" class="dryer-info">
+                            <span class="badge badge-success">DISPONIBLE</span>
+                            <span style="font-size: 11px; margin-top: 4px;">Sin material cargado</span>
+                        </div>
+                    </div>
+
+                    <!-- Moretto -->
+                    <div class="dryer-card" onclick="selectDryer('Moretto')">
+                        <div class="dryer-header">
+                            <span class="dryer-name">Moretto</span>
+                            <span id="status-dot-Moretto" class="dryer-status-dot status-idle"></span>
+                        </div>
+                        <div id="dryer-info-Moretto" class="dryer-info">
+                            <span class="badge badge-success">DISPONIBLE</span>
+                            <span style="font-size: 11px; margin-top: 4px;">Sin material cargado</span>
+                        </div>
+                    </div>
+
+                    <!-- Shinni -->
+                    <div class="dryer-card" onclick="selectDryer('Shinni')">
+                        <div class="dryer-header">
+                            <span class="dryer-name">Shinni</span>
+                            <span id="status-dot-Shinni" class="dryer-status-dot status-idle"></span>
+                        </div>
+                        <div id="dryer-info-Shinni" class="dryer-info">
+                            <span class="badge badge-success">DISPONIBLE</span>
+                            <span style="font-size: 11px; margin-top: 4px;">Sin material cargado</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formulario de Secado -->
+            <section class="card full-width-section">
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">Ingreso a Proceso de Secado</h2>
+                        <span class="badge">Control de Secadoras</span>
+                    </div>
+
+                    <form id="secado-form" class="form-grid">
+                        <div class="form-grid form-grid-2">
+                            <!-- Máquina -->
+                            <div class="form-group">
+                                <label for="secado-maquina">Máquina de Secado *</label>
+                                <select id="secado-maquina" required>
+                                    <option value="Secador 1">Secador 1</option>
+                                    <option value="Secador 2">Secador 2</option>
+                                    <option value="Moretto">Moretto</option>
+                                    <option value="Shinni">Shinni</option>
+                                </select>
+                            </div>
+
+                            <!-- Fecha -->
+                            <div class="form-group">
+                                <label for="secado-fecha">Fecha *</label>
+                                <input type="date" id="secado-fecha" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid form-grid-2">
+                            <!-- Color -->
+                            <div class="form-group">
+                                <label for="secado-color-select">Color / Material PA6 *</label>
+                                <div class="color-select-container">
+                                    <div id="secado-color-swatch" class="color-swatch" style="background-color: #FACC15;"></div>
+                                    <select id="secado-color-select" required style="font-weight: 600;">
+                                        <!-- Cargado por JS -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Código -->
+                            <div class="form-group">
+                                <label for="secado-codigo">Código del Producto *</label>
+                                <div class="input-group">
+                                    <input type="text" id="secado-codigo" required placeholder="Ej: PA6-01" style="font-family: monospace; text-transform: uppercase;">
+                                    <button type="button" onclick="fillSecadoFromGranulos()" class="btn btn-secondary btn-small" style="position: absolute; right: 4px; padding: 6px 8px;">
+                                        Copiar Último
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+                            <button type="submit" class="btn btn-primary">Registrar en Secado</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Historial de Secado -->
+            <section class="card full-width-section">
+                <div class="table-controls">
+                    <div>
+                        <h2 class="card-title">
+                            <span>Historial de Proceso de Secado</span>
+                            <span id="secado-count-badge" class="badge">0</span>
+                        </h2>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div class="search-box">
+                            <input type="text" id="secado-search-input" onkeyup="renderSecadoTable()" placeholder="Buscar por código, máquina, color...">
+                        </div>
+                        <button onclick="exportSecadoToCSV()" class="btn btn-secondary btn-small">Exportar CSV Secado</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Máquina</th>
+                                <th>Código</th>
+                                <th>Color / Material PA6</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th style="text-align: right;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="secado-tbody">
+                            <!-- Filas dinámicas -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="secado-empty-state" class="hidden" style="text-align: center; padding: 30px 16px;">
+                    <h3 style="font-size: 14px; font-weight: 700;">No hay registros en secado</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Ingresa un material a secar en el formulario superior.</p>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- =========================================================
+             PESTAÑA 3: DASHBOARD DE GRÁNULO (GRÁFICOS Y EXCEL)
+             ========================================================= -->
+        <div id="tab-dashboard" class="tab-content">
+            
+            <!-- Barra de Acciones y Filtros del Dashboard -->
+            <section class="card full-width-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                    <div>
+                        <h2 class="card-title">Dashboard de Producción por Color</h2>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                            Monitoreo de Kilos Netos (KG) producidos por material PA6 en la semana y mes actual.
+                        </p>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <button onclick="exportToExcel()" class="btn btn-primary" style="background-color: #16a34a;" title="Exportar reporte completo en formato compatible con Excel (.xls)">
+                            Descargar Excel Completo (.xls)
+                        </button>
+                        <button onclick="exportToCSV()" class="btn btn-secondary">
+                            Exportar CSV Gránulos
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tarjetas de Métricas KPI -->
+            <section class="full-width-section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                <div class="card" style="padding: 18px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Total Kilos (Semanal)</span>
+                    <div id="kpi-kilos-semanal" style="font-size: 26px; font-weight: 900; color: var(--primary); margin-top: 4px; font-family: monospace;">0.00 KG</div>
+                    <span id="kpi-lotes-semanal" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">0 lotes registrados esta semana</span>
+                </div>
+
+                <div class="card" style="padding: 18px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Total Kilos (Mensual)</span>
+                    <div id="kpi-kilos-mensual" style="font-size: 26px; font-weight: 900; color: #0284c7; margin-top: 4px; font-family: monospace;">0.00 KG</div>
+                    <span id="kpi-lotes-mensual" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">0 lotes registrados este mes</span>
+                </div>
+
+                <div class="card" style="padding: 18px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Color Principal (Mes)</span>
+                    <div id="kpi-top-color" style="font-size: 18px; font-weight: 800; color: var(--text-main); margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</div>
+                    <span id="kpi-top-kilos" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">0 KG acumulados</span>
+                </div>
+
+                <div class="card" style="padding: 18px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Promedio Kilos / Lote</span>
+                    <div id="kpi-promedio-lote" style="font-size: 26px; font-weight: 900; color: #d97706; margin-top: 4px; font-family: monospace;">0.00 KG</div>
+                    <span style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Global acumulado</span>
+                </div>
+            </section>
+
+            <!-- Gráficos Circulares: Semanal y Mensual -->
+            <section class="full-width-section grid-2-cols" style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+                
+                <!-- Gráfico Semanal -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Producción Semanal por Color</h3>
+                        <span class="badge">Esta Semana</span>
+                    </div>
+
+                    <div style="position: relative; display: flex; justify-content: center; align-items: center; min-height: 260px;">
+                        <canvas id="chart-semanal" width="340" height="260" style="max-width: 100%; height: auto;"></canvas>
+                        <div id="tooltip-semanal" style="position: absolute; display: none; background: rgba(15, 23, 42, 0.9); color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; pointer-events: none; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"></div>
+                    </div>
+
+                    <div style="margin-top: 16px;" class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Color PA6</th>
+                                    <th style="text-align: right;">Kilos Netos</th>
+                                    <th style="text-align: right;">Participación</th>
+                                    <th style="text-align: right;">Lotes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-semanal-body">
+                                <!-- Filas dinámicas por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Gráfico Mensual -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Producción Mensual por Color</h3>
+                        <span class="badge badge-success">Este Mes</span>
+                    </div>
+
+                    <div style="position: relative; display: flex; justify-content: center; align-items: center; min-height: 260px;">
+                        <canvas id="chart-mensual" width="340" height="260" style="max-width: 100%; height: auto;"></canvas>
+                        <div id="tooltip-mensual" style="position: absolute; display: none; background: rgba(15, 23, 42, 0.9); color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; pointer-events: none; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.2);"></div>
+                    </div>
+
+                    <div style="margin-top: 16px;" class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Color PA6</th>
+                                    <th style="text-align: right;">Kilos Netos</th>
+                                    <th style="text-align: right;">Participación</th>
+                                    <th style="text-align: right;">Lotes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-mensual-body">
+                                <!-- Filas dinámicas por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+    </main>
+
+    <!-- MODAL DE BASE DE DATOS / SINCRONIZACIÓN NUBE -->
+    <div id="cloud-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 style="font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+                    <span>Sincronización & Base de Datos Nube</span>
+                </h3>
+                <button onclick="closeCloudModal()" class="btn btn-secondary btn-small" style="padding: 4px 8px;">✕</button>
+            </div>
+
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                Permite sincronizar tus registros con **Google Sheets** (Google Apps Script) o **Firebase**, o bien exportar/importar respaldos locales en JSON (ideal para GitHub Pages).
+            </p>
+
+            <!-- Configuración URL Endpoint -->
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label for="cloud-url-input">URL del Webhook / Base de Datos Nube</label>
+                <input type="url" id="cloud-url-input" placeholder="https://script.google.com/macros/s/.../exec">
+                <span style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                    Pega tu URL de Google Apps Script WebApp o Firebase Endpoint.
+                </span>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
+                <button onclick="saveCloudConfig()" class="btn btn-primary btn-small">Guardar URL</button>
+                <button onclick="syncWithCloud()" class="btn btn-secondary btn-small">Sincronizar Ahora</button>
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 12px; cursor: pointer; text-transform: none; color: var(--text-main);">
+                    <input type="checkbox" id="auto-sync-checkbox" onchange="toggleAutoSync(this.checked)"> Auto-sincronizar al guardar
+                </label>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+            <!-- Opción: Copiar Apps Script -->
+            <div style="margin-bottom: 20px;">
+                <h4 style="font-size: 13px; font-weight: 800; margin-bottom: 6px;">Google Sheets Gratuito (en 2 minutos):</h4>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                    Crea una hoja de cálculo en Google Drive, ve a <i>Extensiones &gt; Apps Script</i>, pega este código y despliega como "Aplicación Web" (acceso: Cualquier persona).
+                </p>
+                <button onclick="copyAppsScriptCode()" class="btn btn-secondary btn-small" style="background-color: #eef2ff; color: var(--primary-text); font-weight: 800;">
+                    Copiar Código para Google Apps Script
+                </button>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+            <!-- Respaldo Local Manual JSON -->
+            <div>
+                <h4 style="font-size: 13px; font-weight: 800; margin-bottom: 6px;">Respaldo y Transferencia Manual (.JSON)</h4>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+                    <button onclick="exportJSONBackup()" class="btn btn-secondary btn-small">Exportar Respaldo (.json)</button>
+                    <label class="btn btn-secondary btn-small" style="cursor: pointer;">
+                        Importar Respaldo (.json)
+                        <input type="file" id="import-json-file" accept=".json" onchange="importJSONBackup(event)" class="hidden">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmación -->
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div style="background: #fff; padding: 24px; border-radius: 12px; max-width: 400px; width: 100%;">
+            <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 8px;">¿Eliminar todos los registros?</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Esta acción vaciará el historial completo de gránulos registrados.</p>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button onclick="closeModal()" class="btn btn-secondary">Cancelar</button>
+                <button id="modal-confirm-btn" class="btn btn-primary" style="background-color: var(--danger);">Sí, Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor de Toast -->
+    <div id="toast-container"></div>
+
+    <!-- LÓGICA JAVASCRIPT (100% OFFLINE + CODE 128 NATIVO + NUBE) -->
+    <script>
+        const STORAGE_KEY_GRANULOS = 'pg_granulos_v3';
+        const STORAGE_KEY_SECADO = 'pg_secado_v3';
+        const STORAGE_KEY_CLOUD = 'pg_cloud_config_v3';
+
+        let records = [];
+        let secadoRecords = [];
+        let cloudConfig = { url: '', autoSync: false };
+
+        // Catálogo exacto de 11 materiales/colores PA6
+        const COLOR_CATALOG = [
+            { name: 'Gránulos Reciclados -PA6- JAF', code: 'JAF', hex: '#FACC15', textHex: '#0f172a' },
+            { name: 'Gránulos Reciclados -PA6- JAS', code: 'JAS', hex: '#FDE68A', textHex: '#0f172a' },
+            { name: 'Gránulos Reciclados PA6 Neutro', code: 'Neutro', hex: '#F3F4F6', textHex: '#0f172a' },
+            { name: 'Gránulos Reciclados PA6 Negra', code: 'Negra', hex: '#1F2937', textHex: '#ffffff' },
+            { name: 'Gránulos Reciclados-PA6-Nylium', code: 'Nylium', hex: '#6D28D9', textHex: '#ffffff' },
+            { name: 'Gránulos Reciclados-PA6-Azul', code: 'Azul', hex: '#0284C7', textHex: '#ffffff' },
+            { name: 'Gránulos Reciclados -PA6- Verde FLUO', code: 'Verde FLUO', hex: '#16A34A', textHex: '#ffffff' },
+            { name: 'Gránulos Reciclados-PA6- ORS', code: 'ORS', hex: '#EA580C', textHex: '#ffffff' },
+            { name: 'Gránulos Reciclados -PA6- OFS', code: 'OFS', hex: '#EAB308', textHex: '#0f172a' },
+            { name: 'Gránulos Reciclados -PA6- RST', code: 'RST', hex: '#E11D48', textHex: '#ffffff' },
+            { name: 'Gránulos Reciclados -PA6- ROS', code: 'ROS', hex: '#DC2626', textHex: '#ffffff' }
+        ];
+
+        /* =============================================================
+           MOTOR OFICIAL CODE 128 B ISO/IEC 15417 (100% NATIVO EN JS)
+           ============================================================= */
+        const CODE128_PATTERNS = [
+            [2,1,2,2,2,2],[2,2,2,1,2,2],[2,2,2,2,2,1],[1,2,1,2,2,3],[1,2,1,3,2,2],
+            [1,3,1,2,2,2],[1,2,2,2,1,3],[1,2,2,3,1,2],[1,3,2,2,1,2],[2,2,1,2,1,3],
+            [2,2,1,3,1,2],[2,3,1,2,1,2],[1,1,2,2,3,2],[1,2,2,1,3,2],[1,2,2,2,3,1],
+            [1,1,3,2,2,2],[1,2,3,1,2,2],[1,2,3,2,2,1],[2,2,3,2,1,1],[2,2,1,1,3,2],
+            [2,2,1,2,3,1],[2,1,3,2,1,2],[2,2,3,1,1,2],[3,1,2,1,3,1],[3,1,1,2,2,2],
+            [3,2,1,1,2,2],[3,2,1,2,2,1],[3,1,2,2,1,2],[3,2,2,1,1,2],[3,2,2,2,1,1],
+            [2,1,2,1,2,3],[2,1,2,3,2,1],[2,3,2,1,2,1],[1,1,1,3,2,3],[1,3,1,1,2,3],
+            [1,3,1,3,2,1],[1,1,2,3,1,3],[1,3,2,1,1,3],[1,3,2,3,1,1],[2,1,1,3,1,3],
+            [2,3,1,1,1,3],[2,3,1,3,1,1],[1,1,2,1,3,3],[1,1,2,3,3,1],[1,3,2,1,3,1],
+            [1,1,3,1,2,3],[1,1,3,3,2,1],[1,3,3,1,2,1],[3,1,3,1,2,1],[2,1,1,3,3,1],
+            [2,3,1,1,3,1],[2,1,3,1,1,3],[2,1,3,3,1,1],[2,1,3,1,3,1],[3,1,1,1,2,3],
+            [3,1,1,3,2,1],[3,3,1,1,2,1],[3,1,2,1,1,3],[3,1,2,3,1,1],[3,3,2,1,1,1],
+            [3,1,4,1,1,1],[2,2,1,4,1,1],[4,3,1,1,1,1],[1,1,1,2,2,4],[1,1,1,4,2,2],
+            [1,2,1,1,2,4],[1,2,1,4,2,1],[1,4,1,1,2,2],[1,4,1,2,2,1],[1,1,2,2,1,4],
+            [1,1,2,4,1,2],[1,2,2,1,1,4],[1,2,2,4,1,1],[1,4,2,1,1,2],[1,4,2,2,1,1],
+            [2,4,1,2,1,1],[2,2,1,1,1,4],[4,1,3,1,1,1],[2,4,1,1,1,2],[1,3,4,1,1,1],
+            [1,1,1,2,4,2],[1,2,1,1,4,2],[1,2,1,2,4,1],[1,1,4,2,1,2],[1,2,4,1,1,2],
+            [1,2,4,2,1,1],[4,1,1,2,1,2],[4,2,1,1,1,2],[4,2,1,2,1,1],[2,1,2,1,4,1],
+            [2,1,4,1,2,1],[4,1,2,1,2,1],[1,1,1,1,4,3],[1,1,1,3,4,1],[1,3,1,1,4,1],
+            [1,1,4,1,1,3],[1,1,4,3,1,1],[4,1,1,1,1,3],[4,1,1,3,1,1],[1,1,3,1,4,1],
+            [1,1,4,1,3,1],[3,1,1,1,4,1],[4,1,1,1,3,1],[2,1,1,4,1,2],[2,1,1,2,1,4],
+            [2,1,1,2,3,2],[2,3,3,1,1,1,2] // 106 Stop
+        ];
+
+        function encodeCode128B(text) {
+            text = text || 'PA6-01';
+            const charCodes = [104]; // Start B
+            let checksum = 104;
+
+            for (let i = 0; i < text.length; i++) {
+                let code = text.charCodeAt(i) - 32;
+                if (code < 0 || code > 94) code = 31; // Fallback '?'
+                charCodes.push(code);
+                checksum += (i + 1) * code;
+            }
+
+            const checkDigit = checksum % 103;
+            charCodes.push(checkDigit);
+            charCodes.push(106); // Stop pattern
+
+            // Secuencia de anchos de barras y espacios
+            const widths = [];
+            charCodes.forEach(codeIdx => {
+                widths.push(...CODE128_PATTERNS[codeIdx]);
+            });
+
+            return { text, widths };
+        }
+
+        // Renderizado nítido en SVG para pantalla y vista previa
+        function renderBarcodeSVG(text, svgElement) {
+            if (!svgElement) return;
+            const encoded = encodeCode128B(text);
+            const quietZone = 10;
+            let totalModuleWidth = 0;
+            encoded.widths.forEach(w => totalModuleWidth += w);
+
+            const totalWidth = totalModuleWidth + (quietZone * 2);
+            const barcodeHeight = 50;
+            const textHeight = 16;
+            const totalHeight = barcodeHeight + textHeight + 4;
+
+            svgElement.setAttribute('viewBox', `0 0 ${totalWidth} ${totalHeight}`);
+            svgElement.innerHTML = '';
+
+            // Fondo blanco
+            const bgRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            bgRect.setAttribute('x', '0');
+            bgRect.setAttribute('y', '0');
+            bgRect.setAttribute('width', totalWidth);
+            bgRect.setAttribute('height', totalHeight);
+            bgRect.setAttribute('fill', '#FFFFFF');
+            svgElement.appendChild(bgRect);
+
+            // Dibujar Barras
+            let currentX = quietZone;
+            encoded.widths.forEach((width, index) => {
+                const isBar = index % 2 === 0;
+                if (isBar) {
+                    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                    rect.setAttribute('x', currentX);
+                    rect.setAttribute('y', '2');
+                    rect.setAttribute('width', width);
+                    rect.setAttribute('height', barcodeHeight);
+                    rect.setAttribute('fill', '#000000');
+                    svgElement.appendChild(rect);
+                }
+                currentX += width;
+            });
+
+            // Texto legible debajo
+            const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textEl.setAttribute('x', totalWidth / 2);
+            textEl.setAttribute('y', totalHeight - 3);
+            textEl.setAttribute('text-anchor', 'middle');
+            textEl.setAttribute('font-family', 'monospace');
+            textEl.setAttribute('font-size', '13');
+            textEl.setAttribute('font-weight', 'bold');
+            textEl.setAttribute('fill', '#000000');
+            textEl.textContent = text;
+            svgElement.appendChild(textEl);
+        }
+
+        /* -------------------------------------------------------------
+           INICIALIZACIÓN Y NAVEGACIÓN
+           ------------------------------------------------------------- */
+        document.addEventListener('DOMContentLoaded', () => {
+            populateColorSelects();
+            setDefaultDates();
+            loadFromLocalStorage();
+            loadCloudConfig();
+            setupLivePreviewListeners();
+            updateLiveBarcode();
+            renderTable();
+            renderSecadoTable();
+            updateDryerCardsState();
+            setupChartTooltips();
+        });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            if (tabId === 'tab-granulo') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('tab-granulo').classList.add('active');
+            } else if (tabId === 'tab-secado') {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('tab-secado').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[2].classList.add('active');
+                document.getElementById('tab-dashboard').classList.add('active');
+                renderDashboard();
+            }
+        }
+
+        function populateColorSelects() {
+            const select1 = document.getElementById('color-select');
+            const select2 = document.getElementById('secado-color-select');
+
+            [select1, select2].forEach(select => {
+                select.innerHTML = '';
+                COLOR_CATALOG.forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item.name;
+                    opt.textContent = item.name;
+                    select.appendChild(opt);
+                });
+            });
+
+            select2.addEventListener('change', (e) => {
+                const meta = getColorMeta(e.target.value);
+                document.getElementById('secado-color-swatch').style.backgroundColor = meta.hex;
+            });
+        }
+
+        function setDefaultDates() {
+            const today = new Date().toISOString().slice(0, 10);
+            document.getElementById('fecha').value = today;
+            document.getElementById('secado-fecha').value = today;
+        }
+
+        function setupLivePreviewListeners() {
+            ['codigo', 'kilos-netos', 'color-select', 'fecha', 'operador', 'tiempo-correcto'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', updateLiveBarcode);
+                    el.addEventListener('change', updateLiveBarcode);
+                }
+            });
+        }
+
+        function generateRandomCodigo() {
+            const num = String(Math.floor(1 + Math.random() * 99)).padStart(2, '0');
+            document.getElementById('codigo').value = `PA6-${num}`;
+            updateLiveBarcode();
+        }
+
+        function getColorMeta(colorName) {
+            return COLOR_CATALOG.find(c => c.name === colorName) || COLOR_CATALOG[0];
+        }
+
+        function formatKilos(val) {
+            const num = parseFloat(val);
+            return isNaN(num) || num <= 0 ? '25.50' : num.toFixed(2);
+        }
+
+        function updateLiveBarcode() {
+            const codigo = document.getElementById('codigo').value.trim().toUpperCase() || 'PA6-01';
+            const kilosFormatted = formatKilos(document.getElementById('kilos-netos').value);
+            const colorName = document.getElementById('color-select').value;
+            const colorMeta = getColorMeta(colorName);
+            const fecha = document.getElementById('fecha').value || new Date().toISOString().slice(0, 10);
+            const operador = document.getElementById('operador').value;
+            const tiempoCorrecto = document.getElementById('tiempo-correcto').value;
+
+            document.getElementById('form-color-swatch').style.backgroundColor = colorMeta.hex;
+
+            const banner = document.getElementById('preview-color-banner');
+            banner.style.backgroundColor = colorMeta.hex;
+            banner.style.color = colorMeta.textHex;
+
+            document.getElementById('preview-color-dot').style.backgroundColor = colorMeta.hex;
+            document.getElementById('preview-color').textContent = colorMeta.name;
+            document.getElementById('preview-big-codigo').textContent = codigo;
+            document.getElementById('preview-kilos').textContent = kilosFormatted;
+            document.getElementById('preview-fecha').textContent = fecha;
+            document.getElementById('preview-operador').textContent = operador;
+            document.getElementById('preview-tiempo').textContent = tiempoCorrecto;
+
+            const svgEl = document.getElementById('live-barcode-svg');
+            renderBarcodeSVG(codigo, svgEl);
+        }
+
+        /* -------------------------------------------------------------
+           REGISTRO DE GRÁNULOS
+           ------------------------------------------------------------- */
+        document.getElementById('granulo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const codigo = document.getElementById('codigo').value.trim().toUpperCase();
+            const kilosNetos = parseFloat(document.getElementById('kilos-netos').value);
+            const color = document.getElementById('color-select').value;
+            const fecha = document.getElementById('fecha').value;
+            const operador = document.getElementById('operador').value;
+            const tiempoCorrecto = document.getElementById('tiempo-correcto').value;
+
+            if (isNaN(kilosNetos) || kilosNetos <= 0) {
+                showToast('Ingresa Kilos Netos válidos.', 'error');
+                return;
+            }
+
+            if (records.some(r => r.codigo === codigo)) {
+                showToast(`El código "${codigo}" ya existe.`, 'error');
+                return;
+            }
+
+            const newRecord = {
+                id: Date.now().toString(),
+                codigo,
+                color,
+                kilosNetos: kilosNetos.toFixed(2),
+                fecha,
+                operador,
+                tiempoCorrecto
+            };
+
+            records.unshift(newRecord);
+            saveToLocalStorage();
+            renderTable();
+            showToast(`Gránulo "${codigo}" registrado.`, 'success');
+
+            if (cloudConfig.autoSync && cloudConfig.url) {
+                syncWithCloud(true);
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('granulo-form').reset();
+            setDefaultDates();
+            generateRandomCodigo();
+            updateLiveBarcode();
+        }
+
+        function loadRecordToForm(id) {
+            const r = records.find(item => item.id === id);
+            if (!r) return;
+
+            document.getElementById('codigo').value = r.codigo;
+            document.getElementById('kilos-netos').value = r.kilosNetos;
+            document.getElementById('color-select').value = r.color;
+            document.getElementById('fecha').value = r.fecha;
+            document.getElementById('operador').value = r.operador;
+            document.getElementById('tiempo-correcto').value = r.tiempoCorrecto;
+
+            updateLiveBarcode();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showToast(`Lote "${r.codigo}" cargado en etiqueta.`, 'info');
+        }
+
+        function deleteRecord(id) {
+            records = records.filter(r => r.id !== id);
+            saveToLocalStorage();
+            renderTable();
+            showToast('Registro eliminado.', 'success');
+
+            if (cloudConfig.autoSync && cloudConfig.url) {
+                syncWithCloud(true);
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('records-tbody');
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const emptyState = document.getElementById('empty-state');
+            tbody.innerHTML = '';
+
+            const filtered = records.filter(r => 
+                r.codigo.toLowerCase().includes(searchVal) ||
+                r.color.toLowerCase().includes(searchVal) ||
+                r.operador.toLowerCase().includes(searchVal) ||
+                r.fecha.includes(searchVal)
+            );
+
+            document.getElementById('records-count-badge').textContent = records.length;
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            filtered.forEach(r => {
+                const colorMeta = getColorMeta(r.color);
+                const tr = document.createElement('tr');
+                const svgId = `thumb-svg-${r.id}`;
+
+                tr.innerHTML = `
+                    <td style="text-align: center; min-width: 140px;">
+                        <div class="barcode-thumb-box">
+                            <svg id="${svgId}" style="width: 120px; height: 36px;"></svg>
+                        </div>
+                    </td>
+                    <td style="font-family: monospace; font-weight: 800; font-size: 14px;">${escapeHTML(r.codigo)}</td>
+                    <td>
+                        <span class="color-tag">
+                            <span class="tag-dot" style="background-color: ${colorMeta.hex};"></span>
+                            ${escapeHTML(r.color)}
+                        </span>
+                    </td>
+                    <td style="text-align: right; font-family: monospace; font-weight: 800; color: var(--primary-text);">
+                        ${r.kilosNetos} KG
+                    </td>
+                    <td style="white-space: nowrap;">${escapeHTML(r.fecha)}</td>
+                    <td><span class="badge badge-warning">${escapeHTML(r.operador)}</span></td>
+                    <td>${escapeHTML(r.tiempoCorrecto)}</td>
+                    <td style="text-align: right; white-space: nowrap;">
+                        <button onclick="loadRecordToForm('${r.id}')" class="btn btn-secondary btn-small" title="Ver en etiqueta">Ver</button>
+                        <button onclick="deleteRecord('${r.id}')" class="btn btn-outline-danger btn-small" title="Eliminar">✕</button>
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+                renderBarcodeSVG(r.codigo, document.getElementById(svgId));
+            });
+        }
+
+        /* -------------------------------------------------------------
+           DESCARGA DE ETIQUETA EN PNG 300 DPI (1063 x 1063 px)
+           ------------------------------------------------------------- */
+        function downloadLabelPNG() {
+            const codigo = document.getElementById('codigo').value.trim().toUpperCase() || 'PA6-01';
+            const kilosFormatted = formatKilos(document.getElementById('kilos-netos').value);
+            const colorName = document.getElementById('color-select').value;
+            const colorMeta = getColorMeta(colorName);
+            const fecha = document.getElementById('fecha').value || new Date().toISOString().slice(0, 10);
+            const operador = document.getElementById('operador').value;
+            const tiempoCorrecto = document.getElementById('tiempo-correcto').value;
+
+            // Canvas cuadrado de 1063x1063 px (300 DPI para 90mm x 90mm)
+            const canvas = document.createElement('canvas');
+            const size = 1063;
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Fondo Blanco y Marco Negro
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, size, size);
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 12;
+            ctx.strokeRect(6, 6, size - 12, size - 12);
+
+            // 1. Franja Banner Superior
+            ctx.fillStyle = colorMeta.hex;
+            ctx.fillRect(12, 12, size - 24, 100);
+            ctx.fillStyle = colorMeta.textHex;
+            ctx.font = '900 36px sans-serif';
+            ctx.fillText('PROCESO DE GRANULO', 36, 75);
+            ctx.font = '800 28px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText('90x90 MM', size - 36, 75);
+            ctx.textAlign = 'left';
+
+            ctx.beginPath();
+            ctx.moveTo(12, 112);
+            ctx.lineTo(size - 12, 112);
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = '#000000';
+            ctx.stroke();
+
+            // 2. Bloque Superior (Material + Código Gigante)
+            ctx.fillStyle = '#64748b';
+            ctx.font = '800 24px sans-serif';
+            ctx.fillText('MATERIAL / COLOR', 36, 160);
+
+            ctx.fillStyle = '#000000';
+            ctx.font = '900 36px sans-serif';
+            ctx.fillText(colorMeta.name, 36, 210);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = '800 24px sans-serif';
+            ctx.fillText('CÓDIGO:', 36, 260);
+
+            ctx.fillStyle = '#000000';
+            ctx.font = '900 100px monospace';
+            ctx.textAlign = 'right';
+            ctx.fillText(codigo, size - 40, 270);
+            ctx.textAlign = 'left';
+
+            ctx.beginPath();
+            ctx.moveTo(12, 320);
+            ctx.lineTo(size - 12, 320);
+            ctx.lineWidth = 6;
+            ctx.stroke();
+
+            // 3. Bloque Central: Kilos Netos + Código de Barras Code 128 Real
+            ctx.fillStyle = '#64748b';
+            ctx.font = '800 24px sans-serif';
+            ctx.fillText('NET KG / KILOS NETOS:', 36, 380);
+
+            ctx.fillStyle = '#000000';
+            ctx.font = '900 80px monospace';
+            ctx.fillText(`${kilosFormatted} KG`, 36, 470);
+
+            ctx.fillStyle = '#16a34a';
+            ctx.font = '900 28px sans-serif';
+            ctx.fillText('VERIFICADO ✓', 36, 530);
+
+            // Dibujar Código de Barras Módulo por Módulo en Canvas
+            const encoded = encodeCode128B(codigo);
+            const barcodeX = 460;
+            const barcodeY = 360;
+            const barcodeHeight = 220;
+            let totalModules = 0;
+            encoded.widths.forEach(w => totalModules += w);
+            const moduleWidth = Math.floor((size - barcodeX - 60) / (totalModules + 20));
+
+            let currX = barcodeX + (10 * moduleWidth);
+            encoded.widths.forEach((w, idx) => {
+                const isBar = idx % 2 === 0;
+                if (isBar) {
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(currX, barcodeY, w * moduleWidth, barcodeHeight);
+                }
+                currX += (w * moduleWidth);
+            });
+
+            // Texto bajo barras
+            ctx.fillStyle = '#000000';
+            ctx.font = '800 32px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(codigo, barcodeX + ((totalModules * moduleWidth) / 2) + 20, barcodeY + barcodeHeight + 45);
+            ctx.textAlign = 'left';
+
+            ctx.beginPath();
+            ctx.moveTo(12, 670);
+            ctx.lineTo(size - 12, 670);
+            ctx.lineWidth = 6;
+            ctx.stroke();
+
+            // 4. Pie Operativo
+            const colW = (size - 24) / 3;
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(12, 673, size - 24, size - 685);
+
+            // Col 1: Fecha
+            ctx.fillStyle = '#64748b';
+            ctx.font = '800 24px sans-serif';
+            ctx.fillText('FECHA', 36, 730);
+            ctx.fillStyle = '#000000';
+            ctx.font = '900 36px sans-serif';
+            ctx.fillText(fecha, 36, 780);
+
+            // Separador
+            ctx.fillRect(12 + colW, 673, 6, 380);
+
+            // Col 2: Operador
+            ctx.fillStyle = '#64748b';
+            ctx.font = '800 24px sans-serif';
+            ctx.fillText('OPERADOR', 36 + colW, 730);
+            ctx.fillStyle = '#000000';
+            ctx.font = '900 36px sans-serif';
+            ctx.fillText(operador, 36 + colW, 780);
+
+            // Separador
+            ctx.fillRect(12 + (colW * 2), 673, 6, 380);
+
+            // Col 3: Tiempo Correcto
+            ctx.fillStyle = '#64748b';
+            ctx.font = '800 24px sans-serif';
+            ctx.fillText('TIEMPO CORRECTO', 36 + (colW * 2), 730);
+            ctx.fillStyle = '#000000';
+            ctx.font = '900 36px sans-serif';
+            ctx.fillText(tiempoCorrecto, 36 + (colW * 2), 780);
+
+            // Descargar Imagen
+            const link = document.createElement('a');
+            link.download = `etiqueta_granulo_${codigo}_90x90mm.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            showToast('Etiqueta PNG (90x90mm) descargada.', 'success');
+        }
+
+        /* -------------------------------------------------------------
+           ENVÍO POR CORREO ELECTRÓNICO
+           ------------------------------------------------------------- */
+        function sendLabelByEmail() {
+            const fecha = document.getElementById('fecha').value || new Date().toISOString().slice(0, 10);
+            const colorName = document.getElementById('color-select').value;
+            const colorMeta = getColorMeta(colorName);
+            const codigo = document.getElementById('codigo').value.trim().toUpperCase() || 'PA6-01';
+            const kilosFormatted = formatKilos(document.getElementById('kilos-netos').value);
+            const operador = document.getElementById('operador').value;
+
+            downloadLabelPNG();
+
+            const subject = `imprimir etiqueta granulo ${fecha} -${colorMeta.code}`;
+            const body = `Solicitud de Impresión de Etiqueta (90x90 mm):\n\n` +
+                         `• Código Lote: ${codigo}\n` +
+                         `• Material / Color: ${colorMeta.name}\n` +
+                         `• Kilos Netos: ${kilosFormatted} KG\n` +
+                         `• Fecha: ${fecha}\n` +
+                         `• Operador: ${operador}\n\n` +
+                         `* Nota: La imagen PNG de la etiqueta ha sido descargada en su equipo. Por favor adjúntela a este correo.`;
+
+            const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoUrl;
+
+            showToast('Cliente de correo abierto con el asunto configurado.', 'info');
+        }
+
+        /* -------------------------------------------------------------
+           PROCESO DE SECADO (PESTAÑA 2)
+           ------------------------------------------------------------- */
+        function selectDryer(maquinaName) {
+            document.getElementById('secado-maquina').value = maquinaName;
+            document.querySelectorAll('.dryer-card').forEach(c => c.classList.remove('active-selected'));
+            event.currentTarget.classList.add('active-selected');
+        }
+
+        function fillSecadoFromGranulos() {
+            if (records.length === 0) {
+                showToast('No hay gránulos registrados aún.', 'error');
+                return;
+            }
+            const last = records[0];
+            document.getElementById('secado-codigo').value = last.codigo;
+            document.getElementById('secado-color-select').value = last.color;
+
+            const meta = getColorMeta(last.color);
+            document.getElementById('secado-color-swatch').style.backgroundColor = meta.hex;
+
+            showToast(`Cargado último gránulo: ${last.codigo}`, 'info');
+        }
+
+        document.getElementById('secado-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const maquina = document.getElementById('secado-maquina').value;
+            const fecha = document.getElementById('secado-fecha').value;
+            const color = document.getElementById('secado-color-select').value;
+            const codigo = document.getElementById('secado-codigo').value.trim().toUpperCase();
+
+            // Liberar máquina si ya estaba ocupada
+            secadoRecords.forEach(s => {
+                if (s.maquina === maquina && s.estado === 'En Secado') {
+                    s.estado = 'Completado';
+                }
+            });
+
+            const newSecado = {
+                id: Date.now().toString(),
+                maquina,
+                fecha,
+                color,
+                codigo,
+                estado: 'En Secado'
+            };
+
+            secadoRecords.unshift(newSecado);
+            saveSecadoToLocalStorage();
+            renderSecadoTable();
+            updateDryerCardsState();
+            showToast(`Material ${codigo} ingresado a ${maquina}.`, 'success');
+
+            if (cloudConfig.autoSync && cloudConfig.url) {
+                syncWithCloud(true);
+            }
+        });
+
+        function completeDryer(id) {
+            const item = secadoRecords.find(s => s.id === id);
+            if (item) {
+                item.estado = 'Completado';
+                saveSecadoToLocalStorage();
+                renderSecadoTable();
+                updateDryerCardsState();
+                showToast(`Secado en ${item.maquina} completado.`, 'success');
+
+                if (cloudConfig.autoSync && cloudConfig.url) {
+                    syncWithCloud(true);
+                }
+            }
+        }
+
+        function updateDryerCardsState() {
+            const dryers = ['Secador 1', 'Secador 2', 'Moretto', 'Shinni'];
+
+            dryers.forEach(m => {
+                const active = secadoRecords.find(s => s.maquina === m && s.estado === 'En Secado');
+                const dot = document.getElementById(`status-dot-${m}`);
+                const info = document.getElementById(`dryer-info-${m}`);
+
+                if (active) {
+                    dot.className = 'dryer-status-dot status-busy';
+                    info.innerHTML = `
+                        <span class="badge badge-warning">EN SECADO</span>
+                        <span style="font-size: 11px; margin-top: 4px;">Código: <b>${escapeHTML(active.codigo)}</b></span>
+                        <span style="font-size: 10px; color: var(--text-muted);">${escapeHTML(active.color)}</span>
+                        <button onclick="event.stopPropagation(); completeDryer('${active.id}')" class="btn btn-secondary btn-small" style="margin-top: 6px; padding: 2px 6px; font-size: 10px;">
+                            Liberar Máquina
+                        </button>
+                    `;
+                } else {
+                    dot.className = 'dryer-status-dot status-idle';
+                    info.innerHTML = `
+                        <span class="badge badge-success">DISPONIBLE</span>
+                        <span style="font-size: 11px; margin-top: 4px;">Sin material cargado</span>
+                    `;
+                }
+            });
+        }
+
+        function renderSecadoTable() {
+            const tbody = document.getElementById('secado-tbody');
+            const searchVal = document.getElementById('secado-search-input').value.toLowerCase().trim();
+            const emptyState = document.getElementById('secado-empty-state');
+            tbody.innerHTML = '';
+
+            const filtered = secadoRecords.filter(s =>
+                s.codigo.toLowerCase().includes(searchVal) ||
+                s.maquina.toLowerCase().includes(searchVal) ||
+                s.color.toLowerCase().includes(searchVal) ||
+                s.fecha.includes(searchVal)
+            );
+
+            document.getElementById('secado-count-badge').textContent = secadoRecords.length;
+
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            filtered.forEach(s => {
+                const colorMeta = getColorMeta(s.color);
+                const tr = document.createElement('tr');
+                const isBusy = s.estado === 'En Secado';
+
+                tr.innerHTML = `
+                    <td style="font-weight: 800;">${escapeHTML(s.maquina)}</td>
+                    <td style="font-family: monospace; font-weight: 800;">${escapeHTML(s.codigo)}</td>
+                    <td>
+                        <span class="color-tag">
+                            <span class="tag-dot" style="background-color: ${colorMeta.hex};"></span>
+                            ${escapeHTML(s.color)}
+                        </span>
+                    </td>
+                    <td>${escapeHTML(s.fecha)}</td>
+                    <td>
+                        <span class="badge ${isBusy ? 'badge-warning' : 'badge-success'}">${s.estado}</span>
+                    </td>
+                    <td style="text-align: right;">
+                        ${isBusy ? `<button onclick="completeDryer('${s.id}')" class="btn btn-secondary btn-small">Liberar</button>` : '<span style="font-size: 11px; color: var(--text-muted);">Finalizado</span>'}
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        /* -------------------------------------------------------------
+           EXPORTACIONES CSV Y EXCEL
+           ------------------------------------------------------------- */
+        function exportToCSV() {
+            if (records.length === 0) {
+                showToast('No hay gránulos para exportar.', 'error');
+                return;
+            }
+
+            let csvContent = '\uFEFF';
+            csvContent += 'Código;Color/Material PA6;Kilos Netos (KG);Fecha;Operador;Tiempo Correcto\n';
+
+            records.forEach(r => {
+                csvContent += `${escapeCSV(r.codigo)};${escapeCSV(r.color)};${escapeCSV(r.kilosNetos)};${escapeCSV(r.fecha)};${escapeCSV(r.operador)};${escapeCSV(r.tiempoCorrecto)}\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `proceso_de_granulo_${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showToast('Archivo CSV exportado.', 'success');
+        }
+
+        function exportSecadoToCSV() {
+            if (secadoRecords.length === 0) {
+                showToast('No hay registros de secado para exportar.', 'error');
+                return;
+            }
+
+            let csvContent = '\uFEFF';
+            csvContent += 'Máquina;Código;Color/Material PA6;Fecha;Estado\n';
+
+            secadoRecords.forEach(s => {
+                csvContent += `${escapeCSV(s.maquina)};${escapeCSV(s.codigo)};${escapeCSV(s.color)};${escapeCSV(s.fecha)};${escapeCSV(s.estado)}\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `proceso_de_secado_${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showToast('Archivo CSV de Secado exportado.', 'success');
+        }
+
+        /* -------------------------------------------------------------
+           SINCRONIZACIÓN EN LA NUBE & MANEJO DE BASE DE DATOS
+           ------------------------------------------------------------- */
+        function openCloudModal() {
+            document.getElementById('cloud-modal').classList.remove('hidden');
+        }
+
+        function closeCloudModal() {
+            document.getElementById('cloud-modal').classList.add('hidden');
+        }
+
+        function loadCloudConfig() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY_CLOUD);
+                if (saved) {
+                    cloudConfig = JSON.parse(saved);
+                    document.getElementById('cloud-url-input').value = cloudConfig.url || '';
+                    document.getElementById('auto-sync-checkbox').checked = !!cloudConfig.autoSync;
+                    updateCloudBadge();
+                }
+            } catch (e) {}
+        }
+
+        function saveCloudConfig() {
+            cloudConfig.url = document.getElementById('cloud-url-input').value.trim();
+            cloudConfig.autoSync = document.getElementById('auto-sync-checkbox').checked;
+
+            try {
+                localStorage.setItem(STORAGE_KEY_CLOUD, JSON.stringify(cloudConfig));
+                updateCloudBadge();
+                showToast('Configuración de nube guardada.', 'success');
+            } catch (e) {}
+        }
+
+        function toggleAutoSync(val) {
+            cloudConfig.autoSync = val;
+            saveCloudConfig();
+        }
+
+        function updateCloudBadge() {
+            const badge = document.getElementById('cloud-status-badge');
+            if (cloudConfig.url) {
+                badge.className = 'badge badge-success';
+                badge.textContent = 'Nube Conectada';
+            } else {
+                badge.className = 'badge badge-warning';
+                badge.textContent = 'Solo Local';
+            }
+        }
+
+        async function syncWithCloud(silent = false) {
+            if (!cloudConfig.url) {
+                if (!silent) showToast('Ingresa primero la URL de tu base de datos nube.', 'error');
+                return;
+            }
+
+            const payload = {
+                timestamp: new Date().toISOString(),
+                action: 'sync_all',
+                granulos: records,
+                secado: secadoRecords
+            };
+
+            try {
+                if (!silent) showToast('Enviando datos a la nube...', 'info');
+
+                const response = await fetch(cloudConfig.url, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!silent) showToast('Sincronización enviada exitosamente.', 'success');
+            } catch (err) {
+                if (!silent) showToast('Error al conectar con el servidor nube.', 'error');
+            }
+        }
+
+        function copyAppsScriptCode() {
+            const code = `function doGet(e) {\n  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();\n  var data = sheet.getDataRange().getValues();\n  var headers = data[0];\n  var rows = data.slice(1);\n  var result = rows.map(function(row) {\n    var obj = {};\n    headers.forEach(function(h, i) { obj[h] = row[i]; });\n    return obj;\n  });\n  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);\n}\n\nfunction doPost(e) {\n  var params = JSON.parse(e.postData.contents);\n  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();\n  if (params.action === 'sync_all') {\n    sheet.clear();\n    if (params.granulos && params.granulos.length > 0) {\n      var headers = Object.keys(params.granulos[0]);\n      sheet.appendRow(headers);\n      params.granulos.forEach(function(r) {\n        var row = headers.map(function(h) { return r[h]; });\n        sheet.appendRow(row);\n      });\n    }\n  }\n  return ContentService.createTextOutput(JSON.stringify({status: 'success'})).setMimeType(ContentService.MimeType.JSON);\n}`;
+
+            document.execCommand('copy');
+            showToast('Código Apps Script copiado al portapapeles.', 'success');
+        }
+
+        function exportJSONBackup() {
+            const backup = {
+                version: '3.0',
+                exportDate: new Date().toISOString(),
+                granulos: records,
+                secado: secadoRecords
+            };
+
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `proceso_de_granulo_backup_${new Date().toISOString().slice(0, 10)}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+
+            showToast('Respaldo JSON descargado.', 'success');
+        }
+
+        function importJSONBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.granulos && Array.isArray(data.granulos)) {
+                        records = data.granulos;
+                        saveToLocalStorage();
+                        renderTable();
+                    }
+                    if (data.secado && Array.isArray(data.secado)) {
+                        secadoRecords = data.secado;
+                        saveSecadoToLocalStorage();
+                        renderSecadoTable();
+                        updateDryerCardsState();
+                    }
+                    showToast('Respaldo restaurado con éxito.', 'success');
+                    closeCloudModal();
+                } catch (err) {
+                    showToast('El archivo JSON no es válido.', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        /* -------------------------------------------------------------
+           PERSISTENCIA LOCAL & AUXILIARES
+           ------------------------------------------------------------- */
+        function saveToLocalStorage() {
+            try { localStorage.setItem(STORAGE_KEY_GRANULOS, JSON.stringify(records)); } catch(e) {}
+        }
+
+        function saveSecadoToLocalStorage() {
+            try { localStorage.setItem(STORAGE_KEY_SECADO, JSON.stringify(secadoRecords)); } catch(e) {}
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedG = localStorage.getItem(STORAGE_KEY_GRANULOS);
+                const savedS = localStorage.getItem(STORAGE_KEY_SECADO);
+                if (savedG !== null) records = JSON.parse(savedG);
+                if (savedS !== null) secadoRecords = JSON.parse(savedS);
+                if (savedG === null && savedS === null) loadSampleData();
+            } catch (e) {
+                loadSampleData();
+            }
+        }
+
+        function loadSampleData() {
+            const today = new Date();
+            function getFormatDate(offsetDays) {
+                const d = new Date(today);
+                d.setDate(today.getDate() - offsetDays);
+                return d.toISOString().slice(0, 10);
+            }
+
+            records = [
+                { id: '101', codigo: 'PA6-01', color: 'Gránulos Reciclados -PA6- JAF', kilosNetos: '350.50', fecha: getFormatDate(0), operador: 'vlenan', tiempoCorrecto: '8 horas' },
+                { id: '102', codigo: 'PA6-02', color: 'Gránulos Reciclados-PA6-Azul', kilosNetos: '500.00', fecha: getFormatDate(1), operador: 'fmiguelleto', tiempoCorrecto: '12 horas' },
+                { id: '103', codigo: 'PA6-03', color: 'Gránulos Reciclados -PA6- Verde FLUO', kilosNetos: '280.25', fecha: getFormatDate(2), operador: 'vlenan', tiempoCorrecto: '6 horas' },
+                { id: '104', codigo: 'PA6-04', color: 'Gránulos Reciclados PA6 Negra', kilosNetos: '420.00', fecha: getFormatDate(3), operador: 'fmiguelleto', tiempoCorrecto: '24 horas' }
+            ];
+
+            secadoRecords = [
+                { id: '201', maquina: 'Secador 1', fecha: getFormatDate(0), color: 'Gránulos Reciclados -PA6- JAF', codigo: 'PA6-01', estado: 'En Secado' }
+            ];
+
+            saveToLocalStorage();
+            saveSecadoToLocalStorage();
+            renderTable();
+            renderSecadoTable();
+            updateDryerCardsState();
+        }
+
+        function confirmClearAll() {
+            if (records.length === 0) return;
+            const modal = document.getElementById('confirm-modal');
+            modal.classList.remove('hidden');
+            document.getElementById('modal-confirm-btn').onclick = () => {
+                records = [];
+                saveToLocalStorage();
+                renderTable();
+                closeModal();
+                showToast('Registros de gránulos eliminados.', 'info');
+            };
+        }
+
+        function closeModal() {
+            document.getElementById('confirm-modal').classList.add('hidden');
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => toast.classList.add('show'));
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function escapeCSV(val) {
+            if (val === null || val === undefined) return '""';
+            return `"${String(val).replace(/"/g, '""')}"`;
+        }
+
+        function escapeHTML(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+    </script>
+</body>
+</html>
