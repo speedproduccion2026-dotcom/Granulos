@@ -868,96 +868,96 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px;">
-                            <button type="button" onclick="resetGranuloForm()" class="btn btn-secondary">Limpiar</button>
-                            <button type="submit" class="btn btn-primary">Guardar Gránulo</button>
+                    <!-- Etiqueta en Tiempo Real Tamaño Carta -->
+                    <div class="label-top-block">
+                        <div>
+                            <div class="label-material-sub">
+                                <span id="preview-dot" class="tag-dot" style="background-color: #F3E524;"></span>
+                                <span>COLOR / ESTRUCTURA</span>
+                            </div>
+                            <div id="preview-color" class="label-material-title">AMARILLO JAF</div>
                         </div>
-                    </form>
+
+                        <div>
+                            <div class="label-material-sub">CÓDIGO DE PRODUCTO</div>
+                            <div class="label-code-box">
+                                <div id="preview-codigo-big" class="label-code-big">RMGG00001</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="label-divider"></div>
+
+                    <div class="label-mid-block">
+                        <div class="label-metrics-row">
+                            <div class="label-kilos-box">
+                                <span class="label-bot-lbl">KILOS NETOS</span>
+                                <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 2px;">
+                                    <span id="preview-kilos" class="label-kilos-val">25.00</span>
+                                    <span style="font-size: 12px; font-weight: 900;">KG</span>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="label-bot-lbl">SECADOR</span>
+                                <div id="preview-secador" class="label-secador-val">Secador 1</div>
+                            </div>
+                        </div>
+
+                        <div class="label-barcode-box">
+                            <svg id="live-barcode-svg" style="width: 100%; height: 96px;"></svg>
+                        </div>
+                    </div>
+
+                    <div class="label-bot-block">
+                        <div class="label-bot-col">
+                            <span class="label-bot-lbl">FECHA</span>
+                            <span id="preview-fecha" class="label-bot-val">2026-11-26</span>
+                        </div>
+                        <div class="label-bot-col">
+                            <span class="label-bot-lbl">OPERADOR</span>
+                            <span id="preview-operador" class="label-bot-val">vlenan</span>
+                        </div>
+                        <div class="label-bot-col">
+                            <span class="label-bot-lbl">TIEMPO CORRECTO</span>
+                            <span id="preview-tiempo" class="label-bot-val">8 horas</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Etiqueta en Tiempo Real Tamaño Carta -->
-            <div class="card">
-                <div>
-                    <div class="card-header">
-                        <h2 class="card-title">Etiqueta Tamaño Carta</h2>
-                        <span class="badge">8.5" x 11" · Code 128 B</span>
-                    </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px;">
+                <button type="button" onclick="window.print()" class="btn btn-secondary btn-small">
+                    Imprimir Etiqueta (Carta)
+                </button>
+                <button type="button" onclick="downloadLabelPNG()" class="btn btn-secondary btn-small">
+                    Descargar Etiqueta PNG (Alta Res 1275x1650)
+                </button>
+                <button type="button" onclick="sendLabelByEmail()" class="btn btn-email btn-small">
+                    Enviar por Correo
+                </button>
+            </div>
+        </div>
 
-                    <div class="label-wrapper">
-                        <div id="printable-label-area">
-                            <div id="preview-banner" class="label-banner" style="background-color: #FFEB3B; color: #0f172a;">
-                                <span>PROCESO DE GRANULO</span>
-                                <span>TAMAÑO CARTA</span>
-                            </div>
-
-                            <div class="label-top-block">
-                                <div>
-                                    <div class="label-material-sub">
-                                        <span id="preview-dot" class="tag-dot" style="background-color: #FFEB3B;"></span>
-                                        <span>COLOR PA6</span>
-                                    </div>
-                                    <div id="preview-color" class="label-material-title">Gránulos Reciclados -PA6- JAF</div>
-                                </div>
-
-                                <div>
-                                    <div class="label-material-sub">CÓDIGO DE PRODUCTO</div>
-                                    <div class="label-code-box">
-                                        <div id="preview-codigo-big" class="label-code-big">RMGG01</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="label-divider"></div>
-
-                            <div class="label-mid-block">
-                                <div class="label-metrics-row">
-                                    <div class="label-kilos-box">
-                                        <span class="label-bot-lbl">KILOS NETOS</span>
-                                        <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 2px;">
-                                            <span id="preview-kilos" class="label-kilos-val">25.00</span>
-                                            <span style="font-size: 12px; font-weight: 900;">KG</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span class="label-bot-lbl">SECADOR</span>
-                                        <div id="preview-secador" class="label-secador-val">Secador 1</div>
-                                    </div>
-                                </div>
-
-                                <div class="label-barcode-box">
-                                    <svg id="live-barcode-svg" style="width: 100%; height: 96px;"></svg>
-                                </div>
-                            </div>
-
-                            <div class="label-bot-block">
-                                <div class="label-bot-col">
-                                    <span class="label-bot-lbl">FECHA</span>
-                                    <span id="preview-fecha" class="label-bot-val">2026-11-26</span>
-                                </div>
-                                <div class="label-bot-col">
-                                    <span class="label-bot-lbl">OPERADOR</span>
-                                    <span id="preview-operador" class="label-bot-val">vlenan</span>
-                                </div>
-                                <div class="label-bot-col">
-                                    <span class="label-bot-lbl">TIEMPO CORRECTO</span>
-                                    <span id="preview-tiempo" class="label-bot-val">8 horas</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Tabla de Gránulos Registrados -->
+        <div class="card full-width-section">
+            <div class="table-controls">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <h2 class="card-title">Gránulos Registrados</h2>
+                    <span id="granulos-count" class="badge">0</span>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px;">
-                    <button type="button" onclick="window.print()" class="btn btn-secondary btn-small">
-                        Imprimir Etiqueta (Carta)
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <div class="search-box">
+                        <input type="text" id="granulos-search" oninput="renderGranulosTable()" placeholder="Buscar código, color, secador, operador...">
+                    </div>
+                    <button type="button" onclick="exportDashboardExcel()" class="btn btn-primary btn-small">
+                        Descargar Excel (.xls)
                     </button>
-                    <button type="button" onclick="downloadLabelPNG()" class="btn btn-secondary btn-small">
-                        Descargar Etiqueta PNG (Alta Res 1275x1650)
+                    <button type="button" onclick="exportGranulosCSV()" class="btn btn-secondary btn-small">
+                        Descargar CSV (.csv)
                     </button>
-                    <button type="button" onclick="sendLabelByEmail()" class="btn btn-email btn-small">
-                        Enviar por Correo
+                    <button type="button" onclick="clearLocalGranulos()" class="btn btn-outline-danger btn-small">
+                        Borrar Todo
                     </button>
                 </div>
             </div>
@@ -1043,9 +1043,9 @@
 
                     <div class="form-grid form-grid-2">
                         <div class="form-group">
-                            <label for="secado-color">Color PA6 *</label>
+                            <label for="secado-color">Color *</label>
                             <div class="color-select-container">
-                                <div id="secado-color-swatch" class="color-swatch" style="background-color: #FFEB3B;"></div>
+                                <div id="secado-color-swatch" class="color-swatch" style="background-color: #F3E524;"></div>
                                 <select id="secado-color" required style="font-weight: 600;"></select>
                             </div>
                         </div>
@@ -1053,7 +1053,7 @@
                         <div class="form-group">
                             <label for="secado-codigo">Código (RMGG...) *</label>
                             <div class="input-group">
-                                <input type="text" id="secado-codigo" required placeholder="Ej: RMGG-JAF" style="font-family: monospace; text-transform: uppercase; padding-right: 110px;">
+                                <input type="text" id="secado-codigo" required placeholder="Ej: RMGG00001" style="font-family: monospace; text-transform: uppercase; padding-right: 110px;">
                                 <button type="button" onclick="loadLastGranuloCodeToSecado()" class="btn btn-secondary btn-small" style="position: absolute; right: 4px;">
                                     Último Código
                                 </button>
@@ -1082,7 +1082,7 @@
                             Descargar Excel (.xls)
                         </button>
                         <button type="button" onclick="exportSecadoCSV()" class="btn btn-secondary btn-small">
-                            Descargar CSV
+                            Descargar CSV (.csv)
                         </button>
                     </div>
                 </div>
@@ -1170,7 +1170,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Color PA6</th>
+                                    <th>Color</th>
                                     <th style="text-align: right;">Kilos Netos</th>
                                     <th style="text-align: right;">%</th>
                                     <th style="text-align: right;">Lotes</th>
@@ -1197,7 +1197,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Color PA6</th>
+                                    <th>Color</th>
                                     <th style="text-align: right;">Kilos Netos</th>
                                     <th style="text-align: right;">%</th>
                                     <th style="text-align: right;">Lotes</th>
@@ -1216,46 +1216,40 @@
 
     <script>
         /* =============================================================
-           CATÁLOGOS OFICIALES (11 COLORES PA6 + CÓDIGOS RMGG01..12 + SECADORAS)
+           CATÁLOGO OFICIAL: ESTRUCTURA GRANULO EN CURSO
            ============================================================= */
-        const COLOR_CATALOG = [
-            { name: 'Gránulos Reciclados -PA6- JAF', code: 'JAF', hex: '#FFEB3B', textHex: '#0f172a' },
-            { name: 'Gránulos Reciclados -PA6- JAS', code: 'JAS', hex: '#F5DEB3', textHex: '#0f172a' },
-            { name: 'Gránulos Reciclados PA6 Neutro', code: 'Neutro', hex: '#F8FAFC', textHex: '#0f172a' },
-            { name: 'Gránulos Reciclados PA6 Negra', code: 'Negra', hex: '#1E293B', textHex: '#ffffff' },
-            { name: 'Gránulos Reciclados-PA6-Nylium', code: 'Nylium', hex: '#673AB7', textHex: '#ffffff' },
-            { name: 'Gránulos Reciclados-PA6-Azul', code: 'Azul', hex: '#0284C7', textHex: '#ffffff' },
-            { name: 'Gránulos Reciclados -PA6- Verde FLUO', code: 'Verde FLUO', hex: '#22C55E', textHex: '#ffffff' },
-            { name: 'Gránulos Reciclados-PA6- ORS', code: 'ORS', hex: '#D97706', textHex: '#ffffff' },
-            { name: 'Gránulos Reciclados -PA6- OFS', code: 'OFS', hex: '#EAB308', textHex: '#0f172a' },
-            { name: 'Gránulos Reciclados -PA6- RST', code: 'RST', hex: '#E11D48', textHex: '#ffffff' },
-            { name: 'Gránulos Reciclados -PA6- ROS', code: 'ROS', hex: '#DC2626', textHex: '#ffffff' }
+        const ESTRUCTURA_GRANULO_CATALOG = [
+            { code: 'RMGG00001', color: 'AMARILLO JAF', colorCode: 'JAF', hex: '#F3E524', textDark: true, textHex: '#0f172a' },
+            { code: 'RMGG00003', color: 'AMARILLO JAS', colorCode: 'JAS', hex: '#F6F49B', textDark: true, textHex: '#0f172a' },
+            { code: 'RMGG00004', color: 'NEUTRO', colorCode: 'NEUTRO', hex: '#DCE0E3', textDark: true, textHex: '#0f172a' },
+            { code: 'RMGG00005', color: 'NEGRO NOIR', colorCode: 'NOIR', hex: '#141414', textDark: false, textHex: '#ffffff' },
+            { code: 'RMGG00018', color: 'AZUL BLU', colorCode: 'BLU', hex: '#1693D6', textDark: false, textHex: '#ffffff' },
+            { code: 'RMGG00025', color: 'VERDE VEF', colorCode: 'VEF', hex: '#17A34A', textDark: false, textHex: '#ffffff' },
+            { code: 'RMGG00026', color: 'NARANJO ORS', colorCode: 'ORS', hex: '#B37238', textDark: false, textHex: '#ffffff' },
+            { code: 'RMGG00027', color: 'NARANJO OFS', colorCode: 'OFS', hex: '#E6B422', textDark: true, textHex: '#0f172a' },
+            { code: 'RMGG00028', color: 'ROJO RST', colorCode: 'RST', hex: '#C93A2B', textDark: false, textHex: '#ffffff' },
+            { code: 'RMGG00029', color: 'ROJO ROS', colorCode: 'ROS', hex: '#D92B4B', textDark: false, textHex: '#ffffff' }
         ];
 
-        const PRODUCT_CODES = [
-            { code: 'RMGG01', label: 'RMGG01 · PA6 JAF', colorName: 'Gránulos Reciclados -PA6- JAF' },
-            { code: 'RMGG02', label: 'RMGG02 · PA6 JAS', colorName: 'Gránulos Reciclados -PA6- JAS' },
-            { code: 'RMGG03', label: 'RMGG03 · PA6 Neutro', colorName: 'Gránulos Reciclados PA6 Neutro' },
-            { code: 'RMGG04', label: 'RMGG04 · PA6 Negra', colorName: 'Gránulos Reciclados PA6 Negra' },
-            { code: 'RMGG05', label: 'RMGG05 · PA6 Nylium', colorName: 'Gránulos Reciclados-PA6-Nylium' },
-            { code: 'RMGG06', label: 'RMGG06 · PA6 Azul', colorName: 'Gránulos Reciclados-PA6-Azul' },
-            { code: 'RMGG07', label: 'RMGG07 · PA6 Verde FLUO', colorName: 'Gránulos Reciclados -PA6- Verde FLUO' },
-            { code: 'RMGG08', label: 'RMGG08 · PA6 ORS', colorName: 'Gránulos Reciclados-PA6- ORS' },
-            { code: 'RMGG09', label: 'RMGG09 · PA6 OFS', colorName: 'Gránulos Reciclados -PA6- OFS' },
-            { code: 'RMGG10', label: 'RMGG10 · PA6 RST', colorName: 'Gránulos Reciclados -PA6- RST' },
-            { code: 'RMGG11', label: 'RMGG11 · PA6 ROS', colorName: 'Gránulos Reciclados -PA6- ROS' },
-            { code: 'RMGG12', label: 'RMGG12 · PA6 Mezcla Especial', colorName: 'Gránulos Reciclados PA6 Neutro' },
-            { code: 'RMGG-PA6-JAF', label: 'RMGG-PA6-JAF', colorName: 'Gránulos Reciclados -PA6- JAF' },
-            { code: 'RMGG-PA6-NEGRA', label: 'RMGG-PA6-NEGRA', colorName: 'Gránulos Reciclados PA6 Negra' },
-            { code: 'RMGG-PA6-AZUL', label: 'RMGG-PA6-AZUL', colorName: 'Gránulos Reciclados-PA6-Azul' },
-            { code: 'RMGG-PA6-NEUTRO', label: 'RMGG-PA6-NEUTRO', colorName: 'Gránulos Reciclados PA6 Neutro' },
-            { code: 'CUSTOM', label: 'Código personalizado (prefijo R)...', colorName: null }
+        // Compatibilidad con registros históricos anteriores sin romper listas
+        const LEGACY_COLOR_ALIASES = [
+            { aliases: ['Gránulos Reciclados -PA6- JAF', 'PA6 JAF', 'JAF'], targetCode: 'RMGG00001' },
+            { aliases: ['Gránulos Reciclados -PA6- JAS', 'PA6 JAS', 'JAS'], targetCode: 'RMGG00003' },
+            { aliases: ['Gránulos Reciclados PA6 Neutro', 'Gránulos Reciclados-PA6-NEUTRO', 'PA6 Neutro'], targetCode: 'RMGG00004' },
+            { aliases: ['Gránulos Reciclados PA6 Negra', 'Gránulos Reciclados-PA6-NEGRA', 'PA6 Negra'], targetCode: 'RMGG00005' },
+            { aliases: ['Gránulos Reciclados-PA6-Azul', 'Gránulos Reciclados-PA6-AZUL', 'PA6 Azul'], targetCode: 'RMGG00018' },
+            { aliases: ['Gránulos Reciclados -PA6- Verde FLUO', 'PA6 Verde FLUO'], targetCode: 'RMGG00025' },
+            { aliases: ['Gránulos Reciclados-PA6- ORS', 'PA6 ORS'], targetCode: 'RMGG00026' },
+            { aliases: ['Gránulos Reciclados -PA6- OFS', 'PA6 OFS'], targetCode: 'RMGG00027' },
+            { aliases: ['Gránulos Reciclados -PA6- RST', 'PA6 RST'], targetCode: 'RMGG00028' },
+            { aliases: ['Gránulos Reciclados -PA6- ROS', 'PA6 ROS'], targetCode: 'RMGG00029' },
+            { aliases: ['Gránulos Reciclados-PA6-Nylium', 'PA6 Nylium'], targetCode: 'RMGG00018' }
         ];
 
         const DRYER_MACHINES = ['Secador 1', 'Secador 2', 'Moretto', 'Shinni'];
 
-        const STORAGE_GRANULOS = 'proceso_granulo_local_records_v2';
-        const STORAGE_SECADO = 'proceso_granulo_local_secado_v2';
+        const STORAGE_GRANULOS = 'proceso_granulo_local_records_v3';
+        const STORAGE_SECADO = 'proceso_granulo_local_secado_v3';
 
         const IDB_NAME = 'ProcesoGranuloDB';
         const IDB_VERSION = 1;
@@ -1265,6 +1259,8 @@
         let secadoData = [];
         let weeklyChartSectors = [];
         let monthlyChartSectors = [];
+        let selectsInitialized = false;
+        let eventsBound = false;
 
         /* =============================================================
            ALMACENAMIENTO SILENCIOSO INTERNO (INDEXEDDB + LOCALSTORAGE)
@@ -1351,8 +1347,8 @@
             granulosData = [
                 {
                     id: 'gr_seed_01',
-                    codigo: 'RMGG01',
-                    color: 'Gránulos Reciclados -PA6- JAF',
+                    codigo: 'RMGG00001',
+                    color: 'AMARILLO JAF',
                     secador: 'Secador 1',
                     kilosNetos: '125.50',
                     fecha: d0,
@@ -1361,8 +1357,8 @@
                 },
                 {
                     id: 'gr_seed_02',
-                    codigo: 'RMGG06',
-                    color: 'Gránulos Reciclados-PA6-Azul',
+                    codigo: 'RMGG00018',
+                    color: 'AZUL BLU',
                     secador: 'Moretto',
                     kilosNetos: '98.00',
                     fecha: d1,
@@ -1376,8 +1372,8 @@
                     id: 'sec_seed_01',
                     maquina: 'Secador 1',
                     fecha: d0,
-                    color: 'Gránulos Reciclados -PA6- JAF',
-                    codigo: 'RMGG01',
+                    color: 'AMARILLO JAF',
+                    codigo: 'RMGG00001',
                     estado: 'En Proceso'
                 }
             ];
@@ -1422,394 +1418,16 @@
                 seedInitialExamplesIfEmpty();
                 await persistAllSilent();
             } else {
-                granulosData = loadedG || [];
-                secadoData = loadedS || [];
+                granulosData = (loadedG || []).map(item => {
+                    const normColor = normalizeColorName(item.color);
+                    return { ...item, color: normColor };
+                });
+                secadoData = (loadedS || []).map(item => {
+                    const normColor = normalizeColorName(item.color);
+                    return { ...item, color: normColor };
+                });
                 await persistAllSilent();
             }
-        }
-
-        async function idbGet(storeName, key) {
-            try {
-                const db = await openMasterIDB();
-                return await new Promise((resolve, reject) => {
-                    const tx = db.transaction(storeName, 'readonly');
-                    const req = tx.objectStore(storeName).get(key);
-                    req.onsuccess = () => resolve(req.result);
-                    req.onerror = () => reject(req.error);
-                });
-            } catch (err) {
-                return undefined;
-            }
-        }
-
-        function safeStorageGet(key) {
-            try {
-                if (window.localStorage) return window.localStorage.getItem(key);
-            } catch (err) {}
-            return memoryStore[key] || null;
-        }
-
-        function safeStorageSet(key, value) {
-            try {
-                if (window.localStorage) {
-                    window.localStorage.setItem(key, value);
-                    return;
-                }
-            } catch (err) {}
-            memoryStore[key] = value;
-        }
-
-        function buildMasterJSONPayload() {
-            return {
-                app: 'Proceso de Granulo',
-                version: '2.0-acumulativo',
-                updatedAt: new Date().toISOString(),
-                totalGranulos: granulosData.length,
-                totalSecado: secadoData.length,
-                granulos: granulosData,
-                secado: secadoData
-            };
-        }
-
-        async function writeToLinkedMasterFile(silent = false) {
-            if (!masterFileHandle) return false;
-            try {
-                const perm = await masterFileHandle.queryPermission({ mode: 'readwrite' });
-                if (perm !== 'granted') {
-                    updateMasterFileUI('permission_needed');
-                    return false;
-                }
-                const writable = await masterFileHandle.createWritable();
-                await writable.write(JSON.stringify(buildMasterJSONPayload(), null, 2));
-                await writable.close();
-
-                pendingBackupCount = 0;
-                safeStorageSet(STORAGE_PENDING, '0');
-                updateMasterFileUI('linked');
-                if (!silent) {
-                    showToast(`Archivo maestro "${masterFileName}" actualizado (${granulosData.length} registros).`, 'success');
-                }
-                return true;
-            } catch (err) {
-                updateMasterFileUI('permission_needed');
-                return false;
-            }
-        }
-
-        async function persistAllAccumulative(incrementPending = true) {
-            safeStorageSet(STORAGE_GRANULOS, JSON.stringify(granulosData));
-            safeStorageSet(STORAGE_SECADO, JSON.stringify(secadoData));
-            await idbPut(IDB_STORE_STATE, 'granulos', granulosData);
-            await idbPut(IDB_STORE_STATE, 'secado', secadoData);
-
-            if (incrementPending) {
-                pendingBackupCount += 1;
-                safeStorageSet(STORAGE_PENDING, String(pendingBackupCount));
-            }
-
-            const written = await writeToLinkedMasterFile(true);
-            if (!written) {
-                updateMasterFileUI(masterFileHandle ? 'permission_needed' : 'local_only');
-            }
-        }
-
-        function seedInitialExamplesIfEmpty() {
-            const today = new Date();
-            const d0 = today.toISOString().slice(0, 10);
-            const d1Date = new Date(today);
-            d1Date.setDate(today.getDate() - 1);
-            const d1 = d1Date.toISOString().slice(0, 10);
-
-            granulosData = [
-                {
-                    id: 'gr_seed_01',
-                    codigo: 'RMGG01',
-                    color: 'Gránulos Reciclados -PA6- JAF',
-                    secador: 'Secador 1',
-                    kilosNetos: '125.50',
-                    fecha: d0,
-                    operador: 'vlenan',
-                    tiempoCorrecto: '8 horas'
-                },
-                {
-                    id: 'gr_seed_02',
-                    codigo: 'RMGG06',
-                    color: 'Gránulos Reciclados-PA6-Azul',
-                    secador: 'Moretto',
-                    kilosNetos: '98.00',
-                    fecha: d1,
-                    operador: 'fmiguelleto',
-                    tiempoCorrecto: '12 horas'
-                }
-            ];
-
-            secadoData = [
-                {
-                    id: 'sec_seed_01',
-                    maquina: 'Secador 1',
-                    fecha: d0,
-                    color: 'Gránulos Reciclados -PA6- JAF',
-                    codigo: 'RMGG01',
-                    estado: 'En Proceso'
-                }
-            ];
-        }
-
-        async function initPersistentStorage() {
-            let loadedG = null;
-            let loadedS = null;
-
-            const idbG = await idbGet(IDB_STORE_STATE, 'granulos');
-            const idbS = await idbGet(IDB_STORE_STATE, 'secado');
-            if (Array.isArray(idbG)) loadedG = idbG;
-            if (Array.isArray(idbS)) loadedS = idbS;
-
-            if (!loadedG) {
-                try {
-                    const rawG = safeStorageGet(STORAGE_GRANULOS);
-                    if (rawG) {
-                        const parsed = JSON.parse(rawG);
-                        if (Array.isArray(parsed)) loadedG = parsed;
-                    }
-                } catch (e) {}
-            }
-
-            if (!loadedS) {
-                try {
-                    const rawS = safeStorageGet(STORAGE_SECADO);
-                    if (rawS) {
-                        const parsed = JSON.parse(rawS);
-                        if (Array.isArray(parsed)) loadedS = parsed;
-                    }
-                } catch (e) {}
-            }
-
-            if (loadedG === null && loadedS === null) {
-                seedInitialExamplesIfEmpty();
-                await persistAllAccumulative(false);
-            } else {
-                granulosData = loadedG || [];
-                secadoData = loadedS || [];
-            }
-
-            pendingBackupCount = parseInt(safeStorageGet(STORAGE_PENDING) || '0', 10) || 0;
-
-            const savedHandle = await idbGet(IDB_STORE_HANDLES, 'masterFileHandle');
-            if (savedHandle) {
-                masterFileHandle = savedHandle;
-                masterFileName = savedHandle.name || 'base_datos_granulos.json';
-                try {
-                    const perm = await masterFileHandle.queryPermission({ mode: 'readwrite' });
-                    if (perm === 'granted') {
-                        await readAndMergeFromHandle(masterFileHandle, true);
-                        updateMasterFileUI('linked');
-                    } else {
-                        updateMasterFileUI('permission_needed');
-                    }
-                } catch (err) {
-                    updateMasterFileUI('permission_needed');
-                }
-            } else {
-                updateMasterFileUI('local_only');
-            }
-        }
-
-        function updateMasterFileUI(state) {
-            const pill = document.getElementById('master-file-pill');
-            const statusText = document.getElementById('master-file-status-text');
-            const pendingBadge = document.getElementById('pending-backup-badge');
-            const btnReconnect = document.getElementById('btn-reconnect-master');
-
-            if (!pill || !statusText) return;
-
-            pill.classList.remove('linked', 'pending');
-            btnReconnect.classList.add('hidden');
-
-            if (state === 'linked' && masterFileHandle) {
-                pill.classList.add('linked');
-                statusText.textContent = `Archivo Maestro Vinculado: ${masterFileName} (${granulosData.length} registros)`;
-                pendingBadge.classList.add('hidden');
-            } else if (state === 'permission_needed' && masterFileHandle) {
-                pill.classList.add('pending');
-                statusText.textContent = `Archivo "${masterFileName}" en pausa · Toca Reactivar`;
-                btnReconnect.classList.remove('hidden');
-                if (pendingBackupCount > 0) {
-                    pendingBadge.textContent = `${pendingBackupCount} cambios sin volcar al archivo`;
-                    pendingBadge.classList.remove('hidden');
-                }
-            } else {
-                statusText.textContent = `IndexedDB + Local Activo (${granulosData.length} registros acumulados)`;
-                if (pendingBackupCount > 0) {
-                    pendingBadge.textContent = `${pendingBackupCount} pendientes de respaldo`;
-                    pendingBadge.classList.remove('hidden');
-                } else {
-                    pendingBadge.classList.add('hidden');
-                }
-            }
-        }
-
-        function mergeRecordsById(existingArr, incomingArr) {
-            const map = new Map();
-            existingArr.forEach(item => {
-                if (item && item.id) map.set(item.id, item);
-            });
-            let added = 0;
-            incomingArr.forEach(item => {
-                if (item && item.id && !map.has(item.id)) {
-                    map.set(item.id, item);
-                    added++;
-                }
-            });
-            return { merged: Array.from(map.values()), added };
-        }
-
-        async function readAndMergeFromHandle(handle, silent = false) {
-            try {
-                const file = await handle.getFile();
-                const text = await file.text();
-                if (!text.trim()) return;
-                const parsed = JSON.parse(text);
-                let addedG = 0;
-                let addedS = 0;
-
-                if (Array.isArray(parsed.granulos)) {
-                    const resG = mergeRecordsById(granulosData, parsed.granulos);
-                    granulosData = resG.merged;
-                    addedG = resG.added;
-                }
-                if (Array.isArray(parsed.secado)) {
-                    const resS = mergeRecordsById(secadoData, parsed.secado);
-                    secadoData = resS.merged;
-                    addedS = resS.added;
-                }
-                if (!silent && (addedG > 0 || addedS > 0)) {
-                    showToast(`Fusionados ${addedG} gránulos y ${addedS} secados desde ${handle.name}.`, 'info');
-                }
-            } catch (err) {
-                // Si el archivo recién se creó vacío, se sobrescribirá con los datos actuales
-            }
-        }
-
-        async function linkMasterFile() {
-            if (!window.showSaveFilePicker) {
-                showToast('Tu navegador móvil no soporta escritura directa; usando IndexedDB + Descarga Acumulada.', 'info');
-                downloadAccumulatedMasterJSON();
-                return;
-            }
-            try {
-                const handle = await window.showSaveFilePicker({
-                    suggestedName: 'base_datos_granulos.json',
-                    types: [{
-                        description: 'Base de Datos Acumulativa JSON',
-                        accept: { 'application/json': ['.json'] }
-                    }]
-                });
-                masterFileHandle = handle;
-                masterFileName = handle.name || 'base_datos_granulos.json';
-                await idbPut(IDB_STORE_HANDLES, 'masterFileHandle', handle);
-                await readAndMergeFromHandle(handle, true);
-                await persistAllAccumulative(false);
-                renderGranulosTable();
-                renderDryerCards();
-                renderSecadoTable();
-                renderDashboard();
-                showToast(`Archivo maestro "${masterFileName}" vinculado. Todo se acumulará aquí.`, 'success');
-            } catch (err) {
-                if (err.name !== 'AbortError') {
-                    showToast('No se pudo vincular el archivo: ' + err.message, 'error');
-                }
-            }
-        }
-
-        async function reconnectMasterFilePermission() {
-            if (!masterFileHandle) return;
-            try {
-                const perm = await masterFileHandle.requestPermission({ mode: 'readwrite' });
-                if (perm === 'granted') {
-                    await readAndMergeFromHandle(masterFileHandle, true);
-                    await persistAllAccumulative(false);
-                    renderGranulosTable();
-                    renderDryerCards();
-                    renderSecadoTable();
-                    renderDashboard();
-                    showToast(`Escritura directa reactivada en "${masterFileName}".`, 'success');
-                }
-            } catch (err) {
-                showToast('Permiso denegado para el archivo maestro.', 'error');
-            }
-        }
-
-        async function openAndMergeMasterFile() {
-            if (window.showOpenFilePicker) {
-                try {
-                    const [handle] = await window.showOpenFilePicker({
-                        multiple: false,
-                        types: [{
-                            description: 'Archivo Maestro JSON',
-                            accept: { 'application/json': ['.json'] }
-                        }]
-                    });
-                    const perm = await handle.requestPermission({ mode: 'readwrite' });
-                    await readAndMergeFromHandle(handle, false);
-                    if (perm === 'granted') {
-                        masterFileHandle = handle;
-                        masterFileName = handle.name || 'base_datos_granulos.json';
-                        await idbPut(IDB_STORE_HANDLES, 'masterFileHandle', handle);
-                    }
-                    await persistAllAccumulative(false);
-                    renderGranulosTable();
-                    renderDryerCards();
-                    renderSecadoTable();
-                    renderDashboard();
-                    return;
-                } catch (err) {
-                    if (err.name === 'AbortError') return;
-                }
-            }
-            document.getElementById('fallback-merge-input').click();
-        }
-
-        function handleFallbackMergeInput(event) {
-            const file = event.target.files && event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                try {
-                    const parsed = JSON.parse(String(e.target.result || '{}'));
-                    let addedG = 0;
-                    let addedS = 0;
-                    if (Array.isArray(parsed.granulos)) {
-                        const resG = mergeRecordsById(granulosData, parsed.granulos);
-                        granulosData = resG.merged;
-                        addedG = resG.added;
-                    }
-                    if (Array.isArray(parsed.secado)) {
-                        const resS = mergeRecordsById(secadoData, parsed.secado);
-                        secadoData = resS.merged;
-                        addedS = resS.added;
-                    }
-                    await persistAllAccumulative(false);
-                    renderGranulosTable();
-                    renderDryerCards();
-                    renderSecadoTable();
-                    renderDashboard();
-                    showToast(`Archivo fusionado: +${addedG} gránulos y +${addedS} secados acumulados.`, 'success');
-                } catch (err) {
-                    showToast('El archivo seleccionado no es un JSON válido.', 'error');
-                } finally {
-                    event.target.value = '';
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function downloadAccumulatedMasterJSON() {
-            const payload = buildMasterJSONPayload();
-            downloadFileBlob(JSON.stringify(payload, null, 2), 'base_datos_granulos.json', 'application/json');
-            pendingBackupCount = 0;
-            safeStorageSet(STORAGE_PENDING, '0');
-            updateMasterFileUI(masterFileHandle ? 'linked' : 'local_only');
-            showToast(`Archivo maestro "base_datos_granulos.json" descargado (${granulosData.length} registros).`, 'success');
         }
 
         /* =============================================================
@@ -1841,19 +1459,19 @@
         ];
 
         function computeCode128B(text) {
-            const safeText = String(text || 'RMGG01');
-            const codes = [104]; // Start B
+            const safeText = String(text || 'RMGG00001');
+            const codes = [104];
             let sum = 104;
 
             for (let i = 0; i < safeText.length; i++) {
                 let val = safeText.charCodeAt(i) - 32;
-                if (val < 0 || val > 94) val = 31; // '?'
+                if (val < 0 || val > 94) val = 31;
                 codes.push(val);
                 sum += (i + 1) * val;
             }
 
-            codes.push(sum % 103); // Check digit
-            codes.push(106); // Stop
+            codes.push(sum % 103);
+            codes.push(106);
 
             const widths = [];
             codes.forEach(idx => widths.push(...CODE128_B_TABLE[idx]));
@@ -1916,14 +1534,192 @@
         }
 
         /* =============================================================
-           INICIALIZACIÓN Y NAVEGACIÓN
+           CATÁLOGO, SINCRONIZACIÓN DE CÓDIGO/COLOR E INICIALIZACIÓN
            ============================================================= */
+        function normalizeColorName(rawColor) {
+            const clean = String(rawColor || '').trim();
+            const direct = ESTRUCTURA_GRANULO_CATALOG.find(
+                item => item.color.toLowerCase() === clean.toLowerCase()
+            );
+            if (direct) return direct.color;
+
+            for (const aliasGroup of LEGACY_COLOR_ALIASES) {
+                if (aliasGroup.aliases.some(a => a.toLowerCase() === clean.toLowerCase())) {
+                    const mapped = ESTRUCTURA_GRANULO_CATALOG.find(e => e.code === aliasGroup.targetCode);
+                    if (mapped) return mapped.color;
+                }
+            }
+            return ESTRUCTURA_GRANULO_CATALOG[0].color;
+        }
+
+        function getEntryByColor(colorName) {
+            const norm = normalizeColorName(colorName);
+            return ESTRUCTURA_GRANULO_CATALOG.find(item => item.color === norm) || ESTRUCTURA_GRANULO_CATALOG[0];
+        }
+
+        function getEntryByCode(codeStr) {
+            const clean = String(codeStr || '').trim().toUpperCase();
+            return ESTRUCTURA_GRANULO_CATALOG.find(item => item.code === clean) || null;
+        }
+
+        function ensureStartsWithRMGGOrR(codeStr) {
+            const clean = String(codeStr || '').trim().toUpperCase();
+            if (!clean) return 'RMGG00001';
+            if (clean.startsWith('RMGG')) return clean;
+            if (clean.startsWith('R')) return clean;
+            if (clean.startsWith('MGG')) return 'R' + clean;
+            return 'RMGG' + clean;
+        }
+
+        function getCurrentCodigo() {
+            const codigoSelect = document.getElementById('codigo-select');
+            const customInput = document.getElementById('codigo-custom');
+            const selVal = codigoSelect ? codigoSelect.value : 'RMGG00001';
+            if (selVal === 'CUSTOM') {
+                return ensureStartsWithRMGGOrR(customInput ? customInput.value : '');
+            }
+            return selVal || 'RMGG00001';
+        }
+
+        function initSelects() {
+            const codigoSelect = document.getElementById('codigo-select');
+            const colorSelect = document.getElementById('color-select');
+            const secadoColorSelect = document.getElementById('secado-color');
+
+            if (codigoSelect) {
+                const prevCode = codigoSelect.value;
+                codigoSelect.innerHTML = '';
+                ESTRUCTURA_GRANULO_CATALOG.forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item.code;
+                    opt.textContent = `${item.code} · ${item.color}`;
+                    codigoSelect.appendChild(opt);
+                });
+                const customOpt = document.createElement('option');
+                customOpt.value = 'CUSTOM';
+                customOpt.textContent = 'Código personalizado (prefijo RMGG / R)...';
+                codigoSelect.appendChild(customOpt);
+
+                codigoSelect.value = prevCode && Array.from(codigoSelect.options).some(o => o.value === prevCode)
+                    ? prevCode
+                    : ESTRUCTURA_GRANULO_CATALOG[0].code;
+            }
+
+            if (colorSelect) {
+                const prevColor = colorSelect.value;
+                colorSelect.innerHTML = '';
+                ESTRUCTURA_GRANULO_CATALOG.forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item.color;
+                    opt.textContent = `${item.color} (${item.code})`;
+                    colorSelect.appendChild(opt);
+                });
+                colorSelect.value = prevColor && Array.from(colorSelect.options).some(o => o.value === prevColor)
+                    ? prevColor
+                    : ESTRUCTURA_GRANULO_CATALOG[0].color;
+            }
+
+            if (secadoColorSelect) {
+                const prevSecColor = secadoColorSelect.value;
+                secadoColorSelect.innerHTML = '';
+                ESTRUCTURA_GRANULO_CATALOG.forEach(item => {
+                    const opt = document.createElement('option');
+                    opt.value = item.color;
+                    opt.textContent = `${item.color} (${item.code})`;
+                    secadoColorSelect.appendChild(opt);
+                });
+                secadoColorSelect.value = prevSecColor && Array.from(secadoColorSelect.options).some(o => o.value === prevSecColor)
+                    ? prevSecColor
+                    : ESTRUCTURA_GRANULO_CATALOG[0].color;
+            }
+
+            selectsInitialized = true;
+        }
+
+        function setTodayDates() {
+            const today = new Date().toISOString().slice(0, 10);
+            const f1 = document.getElementById('fecha');
+            const f2 = document.getElementById('secado-fecha');
+            if (f1 && !f1.value) f1.value = today;
+            if (f2 && !f2.value) f2.value = today;
+        }
+
+        function bindFormEvents() {
+            if (eventsBound) return;
+            const codigoSelect = document.getElementById('codigo-select');
+            const codigoCustom = document.getElementById('codigo-custom');
+            const colorSelect = document.getElementById('color-select');
+            const secadoColorSelect = document.getElementById('secado-color');
+            const granuloForm = document.getElementById('granulo-form');
+            const secadoForm = document.getElementById('secado-form');
+
+            if (codigoSelect) {
+                codigoSelect.addEventListener('change', (e) => {
+                    if (e.target.value === 'CUSTOM') {
+                        if (codigoCustom) {
+                            codigoCustom.classList.remove('hidden');
+                            codigoCustom.required = true;
+                            codigoCustom.focus();
+                        }
+                    } else {
+                        if (codigoCustom) {
+                            codigoCustom.classList.add('hidden');
+                            codigoCustom.required = false;
+                        }
+                        const matched = getEntryByCode(e.target.value);
+                        if (matched && colorSelect) {
+                            colorSelect.value = matched.color;
+                        }
+                    }
+                    updateLabelPreview();
+                });
+            }
+
+            if (colorSelect) {
+                colorSelect.addEventListener('change', (e) => {
+                    const matched = getEntryByColor(e.target.value);
+                    if (matched && codigoSelect && codigoSelect.value !== 'CUSTOM') {
+                        codigoSelect.value = matched.code;
+                    }
+                    updateLabelPreview();
+                });
+            }
+
+            ['codigo-custom', 'kilos-netos', 'granulo-secador', 'fecha', 'operador', 'tiempo-correcto'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', updateLabelPreview);
+                    el.addEventListener('change', updateLabelPreview);
+                }
+            });
+
+            if (secadoColorSelect) {
+                secadoColorSelect.addEventListener('change', (e) => {
+                    const meta = getEntryByColor(e.target.value);
+                    const swatch = document.getElementById('secado-color-swatch');
+                    if (swatch) swatch.style.backgroundColor = meta.hex;
+                });
+            }
+
+            if (granuloForm) granuloForm.addEventListener('submit', handleGranuloSubmit);
+            if (secadoForm) secadoForm.addEventListener('submit', handleSecadoSubmit);
+            eventsBound = true;
+        }
+
+        function bootstrapDropdownsImmediately() {
+            initSelects();
+            setTodayDates();
+            bindFormEvents();
+            updateLabelPreview();
+        }
+
+        // Inicialización inmediata + respaldo en DOMContentLoaded
+        bootstrapDropdownsImmediately();
+
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                initSelects();
-                setTodayDates();
+                bootstrapDropdownsImmediately();
                 await initPersistentStorage();
-                bindFormEvents();
                 updateLabelPreview();
                 renderGranulosTable();
                 renderDryerCards();
@@ -1931,7 +1727,7 @@
                 setupChartHover();
                 renderDashboard();
             } catch (err) {
-                showToast('Ocurrió un error al inicializar: ' + err.message, 'error');
+                showToast('Error al inicializar la aplicación: ' + err.message, 'error');
             }
         });
 
@@ -1951,6 +1747,8 @@
                 const activeBtn = document.getElementById(btnMap[tabId]);
                 if (activeBtn) activeBtn.classList.add('active');
 
+                if (!selectsInitialized) initSelects();
+
                 if (tabId === 'tab-dashboard') {
                     renderDashboard();
                 } else if (tabId === 'tab-secado') {
@@ -1965,115 +1763,56 @@
             }
         }
 
-        function initSelects() {
-            const codigoSelect = document.getElementById('codigo-select');
-            const colorSelect = document.getElementById('color-select');
-            const secadoColorSelect = document.getElementById('secado-color');
-
-            codigoSelect.innerHTML = '';
-            PRODUCT_CODES.forEach(item => {
-                const opt = document.createElement('option');
-                opt.value = item.code;
-                opt.textContent = item.label;
-                codigoSelect.appendChild(opt);
-            });
-
-            [colorSelect, secadoColorSelect].forEach(sel => {
-                sel.innerHTML = '';
-                COLOR_CATALOG.forEach(c => {
-                    const opt = document.createElement('option');
-                    opt.value = c.name;
-                    opt.textContent = c.name;
-                    sel.appendChild(opt);
-                });
-            });
-        }
-
-        function setTodayDates() {
-            const today = new Date().toISOString().slice(0, 10);
-            document.getElementById('fecha').value = today;
-            document.getElementById('secado-fecha').value = today;
-        }
-
-        function getColorMeta(colorName) {
-            return COLOR_CATALOG.find(c => c.name === colorName) || COLOR_CATALOG[0];
-        }
-
-        function ensureStartsWithR(codeStr) {
-            const clean = String(codeStr || '').trim().toUpperCase();
-            if (!clean) return 'RMGG01';
-            return clean.startsWith('R') ? clean : 'R' + clean;
-        }
-
-        function getCurrentCodigo() {
-            const selVal = document.getElementById('codigo-select').value;
-            if (selVal === 'CUSTOM') {
-                return ensureStartsWithR(document.getElementById('codigo-custom').value);
-            }
-            return selVal || 'RMGG01';
-        }
-
-        function bindFormEvents() {
-            document.getElementById('codigo-select').addEventListener('change', (e) => {
-                const customInput = document.getElementById('codigo-custom');
-                if (e.target.value === 'CUSTOM') {
-                    customInput.classList.remove('hidden');
-                    customInput.required = true;
-                    customInput.focus();
-                } else {
-                    customInput.classList.add('hidden');
-                    customInput.required = false;
-                    const found = PRODUCT_CODES.find(p => p.code === e.target.value);
-                    if (found && found.colorName) {
-                        document.getElementById('color-select').value = found.colorName;
-                    }
-                }
-                updateLabelPreview();
-            });
-
-            ['codigo-custom', 'kilos-netos', 'color-select', 'granulo-secador', 'fecha', 'operador', 'tiempo-correcto'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('input', updateLabelPreview);
-                    el.addEventListener('change', updateLabelPreview);
-                }
-            });
-
-            document.getElementById('secado-color').addEventListener('change', (e) => {
-                const meta = getColorMeta(e.target.value);
-                document.getElementById('secado-color-swatch').style.backgroundColor = meta.hex;
-            });
-
-            document.getElementById('granulo-form').addEventListener('submit', handleGranuloSubmit);
-            document.getElementById('secado-form').addEventListener('submit', handleSecadoSubmit);
-        }
-
         function updateLabelPreview() {
             try {
-                const codigo = getCurrentCodigo();
-                const kilosNum = parseFloat(document.getElementById('kilos-netos').value);
-                const kilosText = (!isNaN(kilosNum) && kilosNum > 0) ? kilosNum.toFixed(2) : '0.00';
-                const colorName = document.getElementById('color-select').value;
-                const meta = getColorMeta(colorName);
-                const secador = document.getElementById('granulo-secador').value;
-                const fecha = document.getElementById('fecha').value || new Date().toISOString().slice(0, 10);
-                const operador = document.getElementById('operador').value;
-                const tiempo = document.getElementById('tiempo-correcto').value;
+                if (!selectsInitialized) initSelects();
 
-                document.getElementById('form-color-swatch').style.backgroundColor = meta.hex;
+                const codigo = getCurrentCodigo();
+                const kilosInput = document.getElementById('kilos-netos');
+                const kilosNum = kilosInput ? parseFloat(kilosInput.value) : 25;
+                const kilosText = (!isNaN(kilosNum) && kilosNum > 0) ? kilosNum.toFixed(2) : '0.00';
+
+                const colorSelect = document.getElementById('color-select');
+                const colorName = colorSelect && colorSelect.value ? colorSelect.value : ESTRUCTURA_GRANULO_CATALOG[0].color;
+                const meta = getEntryByColor(colorName);
+
+                const secador = document.getElementById('granulo-secador')?.value || 'Secador 1';
+                const fecha = document.getElementById('fecha')?.value || new Date().toISOString().slice(0, 10);
+                const operador = document.getElementById('operador')?.value || 'vlenan';
+                const tiempo = document.getElementById('tiempo-correcto')?.value || '8 horas';
+
+                const formSwatch = document.getElementById('form-color-swatch');
+                if (formSwatch) formSwatch.style.backgroundColor = meta.hex;
 
                 const banner = document.getElementById('preview-banner');
-                banner.style.backgroundColor = meta.hex;
-                banner.style.color = meta.textHex;
+                if (banner) {
+                    banner.style.backgroundColor = meta.hex;
+                    banner.style.color = meta.textHex;
+                }
 
-                document.getElementById('preview-dot').style.backgroundColor = meta.hex;
-                document.getElementById('preview-color').textContent = meta.name;
-                document.getElementById('preview-codigo-big').textContent = codigo;
-                document.getElementById('preview-kilos').textContent = kilosText;
-                document.getElementById('preview-secador').textContent = secador;
-                document.getElementById('preview-fecha').textContent = fecha;
-                document.getElementById('preview-operador').textContent = operador;
-                document.getElementById('preview-tiempo').textContent = tiempo;
+                const dot = document.getElementById('preview-dot');
+                if (dot) dot.style.backgroundColor = meta.hex;
+
+                const prevColor = document.getElementById('preview-color');
+                if (prevColor) prevColor.textContent = meta.color;
+
+                const prevCode = document.getElementById('preview-codigo-big');
+                if (prevCode) prevCode.textContent = codigo;
+
+                const prevKilos = document.getElementById('preview-kilos');
+                if (prevKilos) prevKilos.textContent = kilosText;
+
+                const prevSecador = document.getElementById('preview-secador');
+                if (prevSecador) prevSecador.textContent = secador;
+
+                const prevFecha = document.getElementById('preview-fecha');
+                if (prevFecha) prevFecha.textContent = fecha;
+
+                const prevOperador = document.getElementById('preview-operador');
+                if (prevOperador) prevOperador.textContent = operador;
+
+                const prevTiempo = document.getElementById('preview-tiempo');
+                if (prevTiempo) prevTiempo.textContent = tiempo;
 
                 renderBarcodeSVG(codigo, document.getElementById('live-barcode-svg'));
             } catch (err) {
@@ -2089,7 +1828,7 @@
             try {
                 const codigo = getCurrentCodigo();
                 const kilosVal = parseFloat(document.getElementById('kilos-netos').value);
-                const color = document.getElementById('color-select').value;
+                const color = normalizeColorName(document.getElementById('color-select').value);
                 const secador = document.getElementById('granulo-secador').value;
                 const fecha = document.getElementById('fecha').value;
                 const operador = document.getElementById('operador').value;
@@ -2115,21 +1854,29 @@
                 await persistAllSilent();
                 renderGranulosTable();
                 renderDashboard();
-                showToast(`Gránulo ${codigo} guardado (${kilosVal.toFixed(2)} KG · ${secador}).`, 'success');
+                showToast(`Gránulo ${codigo} (${color}) guardado internamente.`, 'success');
             } catch (err) {
                 showToast('Error al guardar el gránulo: ' + err.message, 'error');
             }
         }
 
         function resetGranuloForm() {
-            document.getElementById('codigo-select').value = 'RMGG01';
-            document.getElementById('codigo-custom').classList.add('hidden');
-            document.getElementById('codigo-custom').required = false;
-            document.getElementById('codigo-custom').value = '';
+            initSelects();
+            const codigoSelect = document.getElementById('codigo-select');
+            const customInput = document.getElementById('codigo-custom');
+            const colorSelect = document.getElementById('color-select');
+
+            if (codigoSelect) codigoSelect.value = ESTRUCTURA_GRANULO_CATALOG[0].code;
+            if (customInput) {
+                customInput.classList.add('hidden');
+                customInput.required = false;
+                customInput.value = '';
+            }
+            if (colorSelect) colorSelect.value = ESTRUCTURA_GRANULO_CATALOG[0].color;
             document.getElementById('kilos-netos').value = '25.00';
-            document.getElementById('color-select').selectedIndex = 0;
             document.getElementById('granulo-secador').selectedIndex = 0;
-            setTodayDates();
+            const today = new Date().toISOString().slice(0, 10);
+            document.getElementById('fecha').value = today;
             document.getElementById('operador').selectedIndex = 0;
             document.getElementById('tiempo-correcto').value = '8 horas';
             updateLabelPreview();
@@ -2156,23 +1903,25 @@
             const item = granulosData.find(r => r.id === id);
             if (!item) return;
 
+            initSelects();
             const sel = document.getElementById('codigo-select');
             const custom = document.getElementById('codigo-custom');
-            const exists = PRODUCT_CODES.some(p => p.code === item.codigo);
+            const normalizedCode = ensureStartsWithRMGGOrR(item.codigo);
+            const matchedByCode = getEntryByCode(normalizedCode);
 
-            if (exists) {
-                sel.value = item.codigo;
+            if (matchedByCode) {
+                sel.value = matchedByCode.code;
                 custom.classList.add('hidden');
                 custom.required = false;
             } else {
                 sel.value = 'CUSTOM';
-                custom.value = ensureStartsWithR(item.codigo);
+                custom.value = normalizedCode;
                 custom.classList.remove('hidden');
                 custom.required = true;
             }
 
             document.getElementById('kilos-netos').value = item.kilosNetos;
-            document.getElementById('color-select').value = item.color;
+            document.getElementById('color-select').value = normalizeColorName(item.color);
             document.getElementById('granulo-secador').value = item.secador || 'Secador 1';
             document.getElementById('fecha').value = item.fecha;
             document.getElementById('operador').value = item.operador;
@@ -2180,16 +1929,17 @@
 
             updateLabelPreview();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            showToast(`Etiqueta actualizada con ${item.codigo}.`, 'info');
+            showToast(`Etiqueta cargada con ${normalizedCode}.`, 'info');
         }
 
         function renderGranulosTable() {
             const tbody = document.getElementById('granulos-tbody');
             const emptyEl = document.getElementById('granulos-empty');
             const countEl = document.getElementById('granulos-count');
-            const query = (document.getElementById('granulos-search').value || '').toLowerCase().trim();
+            const query = (document.getElementById('granulos-search')?.value || '').toLowerCase().trim();
 
-            countEl.textContent = String(granulosData.length);
+            if (countEl) countEl.textContent = String(granulosData.length);
+            if (!tbody) return;
             tbody.innerHTML = '';
 
             const filtered = granulosData.filter(r =>
@@ -2201,13 +1951,13 @@
             );
 
             if (filtered.length === 0) {
-                emptyEl.classList.remove('hidden');
+                emptyEl?.classList.remove('hidden');
                 return;
             }
-            emptyEl.classList.add('hidden');
+            emptyEl?.classList.add('hidden');
 
             filtered.forEach((r, idx) => {
-                const meta = getColorMeta(r.color);
+                const meta = getEntryByColor(r.color);
                 const svgId = `row-bc-${idx}-${String(r.id).replace(/[^a-zA-Z0-9]/g, '')}`;
                 const tr = document.createElement('tr');
 
@@ -2221,7 +1971,7 @@
                     <td>
                         <span class="color-tag">
                             <span class="tag-dot" style="background-color: ${meta.hex};"></span>
-                            ${escapeHTML(r.color)}
+                            ${escapeHTML(meta.color)}
                         </span>
                     </td>
                     <td><span class="badge">${escapeHTML(r.secador || 'Secador 1')}</span></td>
@@ -2249,13 +1999,12 @@
                 const kilosVal = parseFloat(document.getElementById('kilos-netos').value);
                 const kilosText = (!isNaN(kilosVal) && kilosVal > 0) ? kilosVal.toFixed(2) : '0.00';
                 const colorName = document.getElementById('color-select').value;
-                const meta = getColorMeta(colorName);
+                const meta = getEntryByColor(colorName);
                 const secador = document.getElementById('granulo-secador').value;
                 const fecha = document.getElementById('fecha').value || new Date().toISOString().slice(0, 10);
                 const operador = document.getElementById('operador').value;
                 const tiempo = document.getElementById('tiempo-correcto').value;
 
-                // Formato Tamaño Carta (8.5in x 11in) a 150 DPI => 1275 x 1650 px
                 const canvas = document.createElement('canvas');
                 canvas.width = 1275;
                 canvas.height = 1650;
@@ -2268,7 +2017,6 @@
                 ctx.lineWidth = 14;
                 ctx.strokeRect(7, 7, canvas.width - 14, canvas.height - 14);
 
-                // Banner superior
                 ctx.fillStyle = meta.hex;
                 ctx.fillRect(14, 14, canvas.width - 28, 120);
                 ctx.fillStyle = meta.textHex;
@@ -2279,14 +2027,13 @@
                 ctx.fillText('TAMAÑO CARTA (8.5" x 11")', canvas.width - 45, 88);
                 ctx.textAlign = 'left';
 
-                // Material y Código grande
                 ctx.fillStyle = '#475569';
                 ctx.font = '800 28px sans-serif';
-                ctx.fillText('COLOR PA6', 45, 195);
+                ctx.fillText('COLOR / ESTRUCTURA', 45, 195);
 
                 ctx.fillStyle = '#000000';
-                ctx.font = '900 46px sans-serif';
-                ctx.fillText(meta.name, 45, 255);
+                ctx.font = '900 48px sans-serif';
+                ctx.fillText(meta.color, 45, 255);
 
                 ctx.fillStyle = '#475569';
                 ctx.font = '800 28px sans-serif';
@@ -2299,7 +2046,7 @@
                 ctx.strokeRect(45, 350, canvas.width - 90, 160);
 
                 ctx.fillStyle = '#000000';
-                ctx.font = '900 96px monospace';
+                ctx.font = '900 92px monospace';
                 ctx.textAlign = 'center';
                 ctx.fillText(codigo, canvas.width / 2, 462);
                 ctx.textAlign = 'left';
@@ -2310,7 +2057,6 @@
                 ctx.lineWidth = 8;
                 ctx.stroke();
 
-                // Kilos Netos y Secador
                 ctx.fillStyle = '#475569';
                 ctx.font = '800 28px sans-serif';
                 ctx.fillText('KILOS NETOS', 45, 615);
@@ -2325,7 +2071,6 @@
                 ctx.font = '900 58px sans-serif';
                 ctx.fillText(secador.toUpperCase(), 660, 700);
 
-                // Código de barras Code 128 B
                 const encoded = computeCode128B(codigo);
                 let totalMods = 0;
                 encoded.widths.forEach(w => { totalMods += w; });
@@ -2350,7 +2095,6 @@
                 ctx.fillText(codigo, canvas.width / 2, bcY + bcH + 68);
                 ctx.textAlign = 'left';
 
-                // Pie inferior
                 ctx.beginPath();
                 ctx.moveTo(14, 1380);
                 ctx.lineTo(canvas.width - 14, 1380);
@@ -2395,7 +2139,7 @@
         function sendLabelByEmail() {
             const fecha = document.getElementById('fecha').value || new Date().toISOString().slice(0, 10);
             const colorName = document.getElementById('color-select').value;
-            const meta = getColorMeta(colorName);
+            const meta = getEntryByColor(colorName);
             const codigo = getCurrentCodigo();
             const secador = document.getElementById('granulo-secador').value;
             const kilosVal = parseFloat(document.getElementById('kilos-netos').value);
@@ -2405,12 +2149,12 @@
 
             downloadLabelPNG();
 
-            const subject = `imprimir etiqueta granulo ${fecha} -${meta.code}`;
+            const subject = `imprimir etiqueta granulo ${fecha} -${meta.colorCode}`;
             const body = [
                 'Solicitud de impresión de etiqueta (Formato Tamaño Carta):',
                 '',
                 `• Código Producto: ${codigo}`,
-                `• Color PA6: ${meta.name}`,
+                `• Color / Estructura: ${meta.color}`,
                 `• Secador: ${secador}`,
                 `• Kilos Netos: ${kilosText} KG`,
                 `• Fecha: ${fecha}`,
@@ -2429,7 +2173,8 @@
            ============================================================= */
         function renderDryerCards() {
             const grid = document.getElementById('dryers-grid');
-            const selectedDryer = document.getElementById('secado-maquina').value;
+            const selectedDryer = document.getElementById('secado-maquina')?.value;
+            if (!grid) return;
             grid.innerHTML = '';
 
             DRYER_MACHINES.forEach(machine => {
@@ -2442,6 +2187,7 @@
                 };
 
                 if (active) {
+                    const meta = getEntryByColor(active.color);
                     card.innerHTML = `
                         <div class="dryer-header">
                             <span class="dryer-name">${escapeHTML(machine)}</span>
@@ -2450,7 +2196,7 @@
                         <div class="dryer-info">
                             <span class="badge badge-warning">En Proceso</span>
                             <div>Código: <strong>${escapeHTML(active.codigo)}</strong></div>
-                            <div>${escapeHTML(active.color)}</div>
+                            <div>${escapeHTML(meta.color)}</div>
                             <div>Fecha: ${escapeHTML(active.fecha)}</div>
                             <button type="button" onclick="event.stopPropagation(); completeSecado('${escapeHTML(active.id)}')" class="btn btn-secondary btn-small" style="margin-top: 6px;">
                                 Marcar Completado
@@ -2480,9 +2226,10 @@
                 return;
             }
             const last = granulosData[0];
+            const normColor = normalizeColorName(last.color);
             document.getElementById('secado-codigo').value = last.codigo;
-            document.getElementById('secado-color').value = last.color;
-            document.getElementById('secado-color-swatch').style.backgroundColor = getColorMeta(last.color).hex;
+            document.getElementById('secado-color').value = normColor;
+            document.getElementById('secado-color-swatch').style.backgroundColor = getEntryByColor(normColor).hex;
             if (last.secador) {
                 document.getElementById('secado-maquina').value = last.secador;
                 renderDryerCards();
@@ -2495,8 +2242,8 @@
             try {
                 const maquina = document.getElementById('secado-maquina').value;
                 const fecha = document.getElementById('secado-fecha').value;
-                const color = document.getElementById('secado-color').value;
-                const codigo = ensureStartsWithR(document.getElementById('secado-codigo').value);
+                const color = normalizeColorName(document.getElementById('secado-color').value);
+                const codigo = ensureStartsWithRMGGOrR(document.getElementById('secado-codigo').value);
 
                 secadoData.forEach(item => {
                     if (item.maquina === maquina && item.estado === 'En Proceso') {
@@ -2532,36 +2279,6 @@
             renderSecadoTable();
             showToast(`${found.maquina} marcado como Disponible.`, 'success');
         }
-                });
-
-                secadoData.unshift({
-                    id: 'sec_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
-                    maquina,
-                    fecha,
-                    color,
-                    codigo,
-                    estado: 'En Proceso'
-                });
-
-                await persistAllAccumulative(true);
-                renderDryerCards();
-                renderSecadoTable();
-                document.getElementById('secado-codigo').value = '';
-                showToast(`Ingreso de ${codigo} registrado y acumulado en ${maquina}.`, 'success');
-            } catch (err) {
-                showToast('Error al registrar en secado: ' + err.message, 'error');
-            }
-        }
-
-        async function completeSecado(id) {
-            const found = secadoData.find(s => s.id === id);
-            if (!found) return;
-            found.estado = 'Completado';
-            await persistAllAccumulative(true);
-            renderDryerCards();
-            renderSecadoTable();
-            showToast(`${found.maquina} marcado como Disponible y guardado.`, 'success');
-        }
 
         function renderSecadoTable() {
             const tbody = document.getElementById('secado-tbody');
@@ -2570,7 +2287,8 @@
             const searchInput = document.getElementById('secado-search');
             const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
 
-            countEl.textContent = String(secadoData.length);
+            if (countEl) countEl.textContent = String(secadoData.length);
+            if (!tbody) return;
             tbody.innerHTML = '';
 
             const filtered = secadoData.filter(s =>
@@ -2581,13 +2299,13 @@
             );
 
             if (filtered.length === 0) {
-                emptyEl.classList.remove('hidden');
+                emptyEl?.classList.remove('hidden');
                 return;
             }
-            emptyEl.classList.add('hidden');
+            emptyEl?.classList.add('hidden');
 
             filtered.forEach(s => {
-                const meta = getColorMeta(s.color);
+                const meta = getEntryByColor(s.color);
                 const isBusy = s.estado === 'En Proceso';
                 const tr = document.createElement('tr');
 
@@ -2597,7 +2315,7 @@
                     <td>
                         <span class="color-tag">
                             <span class="tag-dot" style="background-color: ${meta.hex};"></span>
-                            ${escapeHTML(s.color)}
+                            ${escapeHTML(meta.color)}
                         </span>
                     </td>
                     <td>${escapeHTML(s.fecha)}</td>
@@ -2636,18 +2354,18 @@
             list.forEach(item => {
                 const kg = parseFloat(item.kilosNetos) || 0;
                 totalKg += kg;
-                if (!map[item.color]) {
-                    const meta = getColorMeta(item.color);
-                    map[item.color] = {
-                        color: item.color,
+                const meta = getEntryByColor(item.color);
+                if (!map[meta.color]) {
+                    map[meta.color] = {
+                        color: meta.color,
                         code: meta.code,
                         hex: meta.hex,
                         kilos: 0,
                         batches: 0
                     };
                 }
-                map[item.color].kilos += kg;
-                map[item.color].batches += 1;
+                map[meta.color].kilos += kg;
+                map[meta.color].batches += 1;
             });
 
             const rows = Object.values(map).sort((a, b) => b.kilos - a.kilos);
@@ -2672,7 +2390,7 @@
                 document.getElementById('kpi-month-batches').textContent = `${monthItems.length} registros este mes`;
 
                 if (monthSummary.rows.length > 0) {
-                    document.getElementById('kpi-top-color').textContent = monthSummary.rows[0].color;
+                    document.getElementById('kpi-top-color').textContent = `${monthSummary.rows[0].color} (${monthSummary.rows[0].code})`;
                     document.getElementById('kpi-top-kg').textContent = `${monthSummary.rows[0].kilos.toFixed(2)} KG`;
                 } else {
                     document.getElementById('kpi-top-color').textContent = '-';
@@ -2824,6 +2542,7 @@
 
         function renderSummaryTable(tbodyId, rows, totalKg) {
             const tbody = document.getElementById(tbodyId);
+            if (!tbody) return;
             tbody.innerHTML = '';
 
             if (!rows.length) {
@@ -2832,14 +2551,14 @@
             }
 
             rows.forEach(item => {
-                const meta = getColorMeta(item.color);
+                const meta = getEntryByColor(item.color);
                 const pct = totalKg > 0 ? ((item.kilos / totalKg) * 100).toFixed(1) : '0.0';
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>
                         <span class="color-tag">
                             <span class="tag-dot" style="background-color: ${meta.hex};"></span>
-                            ${escapeHTML(item.color)}
+                            ${escapeHTML(meta.color)}
                         </span>
                     </td>
                     <td style="text-align: right; font-family: monospace; font-weight: 800;">${item.kilos.toFixed(2)} KG</td>
@@ -2851,7 +2570,7 @@
         }
 
         /* =============================================================
-           EXPORTACIÓN CSV Y EXCEL (.XLS)
+           EXPORTACIÓN CSV (.CSV) Y EXCEL (.XLS)
            ============================================================= */
         function downloadFileBlob(content, filename, mimeType) {
             const blob = new Blob([content], { type: mimeType });
@@ -2870,12 +2589,12 @@
                 showToast('No hay gránulos para exportar a CSV.', 'error');
                 return;
             }
-            let csv = '\uFEFFCódigo;Color PA6;Secador;Kilos Netos (KG);Fecha;Operador;Tiempo Correcto\n';
+            let csv = '\uFEFFCódigo;Color;Secador;Kilos Netos (KG);Fecha;Operador;Tiempo Correcto\n';
             granulosData.forEach(r => {
-                csv += `${toCSVCell(r.codigo)};${toCSVCell(r.color)};${toCSVCell(r.secador)};${toCSVCell(r.kilosNetos)};${toCSVCell(r.fecha)};${toCSVCell(r.operador)};${toCSVCell(r.tiempoCorrecto)}\n`;
+                csv += `${toCSVCell(r.codigo)};${toCSVCell(normalizeColorName(r.color))};${toCSVCell(r.secador)};${toCSVCell(r.kilosNetos)};${toCSVCell(r.fecha)};${toCSVCell(r.operador)};${toCSVCell(r.tiempoCorrecto)}\n`;
             });
             downloadFileBlob(csv, `proceso_granulo_${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv;charset=utf-8;');
-            showToast('CSV de gránulos descargado.', 'success');
+            showToast('Archivo CSV (.csv) descargado.', 'success');
         }
 
         function exportSecadoCSV() {
@@ -2883,12 +2602,12 @@
                 showToast('No hay registros de secado para exportar.', 'error');
                 return;
             }
-            let csv = '\uFEFFMáquina;Código;Color PA6;Fecha;Estado\n';
+            let csv = '\uFEFFMáquina;Código;Color;Fecha;Estado\n';
             secadoData.forEach(s => {
-                csv += `${toCSVCell(s.maquina)};${toCSVCell(s.codigo)};${toCSVCell(s.color)};${toCSVCell(s.fecha)};${toCSVCell(s.estado)}\n`;
+                csv += `${toCSVCell(s.maquina)};${toCSVCell(s.codigo)};${toCSVCell(normalizeColorName(s.color))};${toCSVCell(s.fecha)};${toCSVCell(s.estado)}\n`;
             });
             downloadFileBlob(csv, `proceso_secado_${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv;charset=utf-8;');
-            showToast('CSV de secado descargado.', 'success');
+            showToast('Archivo CSV (.csv) descargado.', 'success');
         }
 
         function exportDashboardExcel() {
@@ -2902,17 +2621,17 @@
                       xmlns="http://www.w3.org/TR/REC-html40">
                 <head><meta charset="UTF-8"></head>
                 <body>
-                    <h2>PROCESO DE GRANULO - REPORTE LOCAL</h2>
+                    <h2>PROCESO DE GRANULO - ESTRUCTURA GRANULO EN CURSO</h2>
                     <h3>1. Gránulos Registrados</h3>
                     <table border="1" cellpadding="5" cellspacing="0">
                         <tr>
-                            <th>Código</th><th>Color PA6</th><th>Secador</th><th>Kilos Netos (KG)</th>
+                            <th>Código</th><th>Color</th><th>Secador</th><th>Kilos Netos (KG)</th>
                             <th>Fecha</th><th>Operador</th><th>Tiempo Correcto</th>
                         </tr>
                         ${granulosData.map(r => `
                             <tr>
                                 <td>${escapeHTML(r.codigo)}</td>
-                                <td>${escapeHTML(r.color)}</td>
+                                <td>${escapeHTML(normalizeColorName(r.color))}</td>
                                 <td>${escapeHTML(r.secador)}</td>
                                 <td>${escapeHTML(r.kilosNetos)}</td>
                                 <td>${escapeHTML(r.fecha)}</td>
@@ -2924,28 +2643,28 @@
 
                     <h3>2. Resumen Semanal por Color (Desde ${weekStartStr})</h3>
                     <table border="1" cellpadding="5" cellspacing="0">
-                        <tr><th>Color PA6</th><th>Kilos Netos (KG)</th></tr>
+                        <tr><th>Color</th><th>Código</th><th>Kilos Netos (KG)</th></tr>
                         ${weekSummary.rows.map(w => `
-                            <tr><td>${escapeHTML(w.color)}</td><td>${w.kilos.toFixed(2)}</td></tr>
+                            <tr><td>${escapeHTML(w.color)}</td><td>${escapeHTML(w.code)}</td><td>${w.kilos.toFixed(2)}</td></tr>
                         `).join('')}
                     </table>
 
                     <h3>3. Resumen Mensual por Color (Desde ${monthStartStr})</h3>
                     <table border="1" cellpadding="5" cellspacing="0">
-                        <tr><th>Color PA6</th><th>Kilos Netos (KG)</th></tr>
+                        <tr><th>Color</th><th>Código</th><th>Kilos Netos (KG)</th></tr>
                         ${monthSummary.rows.map(m => `
-                            <tr><td>${escapeHTML(m.color)}</td><td>${m.kilos.toFixed(2)}</td></tr>
+                            <tr><td>${escapeHTML(m.color)}</td><td>${escapeHTML(m.code)}</td><td>${m.kilos.toFixed(2)}</td></tr>
                         `).join('')}
                     </table>
 
                     <h3>4. Historial de Secado</h3>
                     <table border="1" cellpadding="5" cellspacing="0">
-                        <tr><th>Máquina</th><th>Código</th><th>Color PA6</th><th>Fecha</th><th>Estado</th></tr>
+                        <tr><th>Máquina</th><th>Código</th><th>Color</th><th>Fecha</th><th>Estado</th></tr>
                         ${secadoData.map(s => `
                             <tr>
                                 <td>${escapeHTML(s.maquina)}</td>
                                 <td>${escapeHTML(s.codigo)}</td>
-                                <td>${escapeHTML(s.color)}</td>
+                                <td>${escapeHTML(normalizeColorName(s.color))}</td>
                                 <td>${escapeHTML(s.fecha)}</td>
                                 <td>${escapeHTML(s.estado)}</td>
                             </tr>
