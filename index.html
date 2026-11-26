@@ -349,9 +349,59 @@
             background-color: var(--danger-light);
         }
 
+        .btn-success {
+            background-color: var(--success);
+            color: #ffffff;
+        }
+
+        .btn-success:hover {
+            background-color: #15803d;
+        }
+
         .btn-small {
             padding: 6px 11px;
             font-size: 12px;
+        }
+
+        /* Modal de Confirmación Personalizado (Sin alert/confirm nativos) */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(15, 23, 42, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+            padding: 16px;
+        }
+
+        .modal-card {
+            background-color: #ffffff;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            max-width: 400px;
+            width: 100%;
+            padding: 22px;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .modal-body {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
         }
 
         /* =============================================================
@@ -868,96 +918,106 @@
                                 </select>
                             </div>
                         </div>
-                    <!-- Etiqueta en Tiempo Real Tamaño Carta -->
-                    <div class="label-top-block">
-                        <div>
-                            <div class="label-material-sub">
-                                <span id="preview-dot" class="tag-dot" style="background-color: #F3E524;"></span>
-                                <span>COLOR / ESTRUCTURA</span>
-                            </div>
-                            <div id="preview-color" class="label-material-title">AMARILLO JAF</div>
-                        </div>
 
-                        <div>
-                            <div class="label-material-sub">CÓDIGO DE PRODUCTO</div>
-                            <div class="label-code-box">
-                                <div id="preview-codigo-big" class="label-code-big">RMGG00001</div>
-                            </div>
+                        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 8px; padding-top: 14px; border-top: 1px solid #e2e8f0; flex-wrap: wrap;">
+                            <button type="button" onclick="resetGranuloForm()" class="btn btn-secondary">
+                                Limpiar Formulario
+                            </button>
+                            <button type="submit" id="btn-registrar-granulo" class="btn btn-primary" style="padding: 12px 22px; font-size: 14px; box-shadow: 0 3px 8px rgba(79, 70, 229, 0.28);">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                                Registrar Gránulo
+                            </button>
                         </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Vista Previa de Etiqueta Tamaño Carta -->
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <h2 class="card-title">Etiqueta Industrial</h2>
+                        <span class="badge badge-success">Tamaño Carta (8.5" x 11")</span>
                     </div>
 
-                    <div class="label-divider"></div>
+                    <div class="label-wrapper">
+                        <div id="printable-label-area">
+                            <div id="preview-banner" class="label-banner" style="background-color: #F3E524; color: #0f172a;">
+                                <span>PROCESO DE GRANULO</span>
+                                <span>8.5" x 11" CARTA</span>
+                            </div>
 
-                    <div class="label-mid-block">
-                        <div class="label-metrics-row">
-                            <div class="label-kilos-box">
-                                <span class="label-bot-lbl">KILOS NETOS</span>
-                                <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 2px;">
-                                    <span id="preview-kilos" class="label-kilos-val">25.00</span>
-                                    <span style="font-size: 12px; font-weight: 900;">KG</span>
+                            <!-- Etiqueta en Tiempo Real Tamaño Carta -->
+                            <div class="label-top-block">
+                                <div>
+                                    <div class="label-material-sub">
+                                        <span id="preview-dot" class="tag-dot" style="background-color: #F3E524;"></span>
+                                        <span>COLOR / ESTRUCTURA</span>
+                                    </div>
+                                    <div id="preview-color" class="label-material-title">AMARILLO JAF</div>
+                                </div>
+
+                                <div>
+                                    <div class="label-material-sub">CÓDIGO DE PRODUCTO</div>
+                                    <div class="label-code-box">
+                                        <div id="preview-codigo-big" class="label-code-big">RMGG00001</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <span class="label-bot-lbl">SECADOR</span>
-                                <div id="preview-secador" class="label-secador-val">Secador 1</div>
+
+                            <div class="label-divider"></div>
+
+                            <div class="label-mid-block">
+                                <div class="label-metrics-row">
+                                    <div class="label-kilos-box">
+                                        <span class="label-bot-lbl">KILOS NETOS</span>
+                                        <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 2px;">
+                                            <span id="preview-kilos" class="label-kilos-val">25.00</span>
+                                            <span style="font-size: 12px; font-weight: 900;">KG</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="label-bot-lbl">SECADOR</span>
+                                        <div id="preview-secador" class="label-secador-val">Secador 1</div>
+                                    </div>
+                                </div>
+
+                                <div class="label-barcode-box">
+                                    <svg id="live-barcode-svg" style="width: 100%; height: 96px;"></svg>
+                                </div>
+                            </div>
+
+                            <div class="label-bot-block">
+                                <div class="label-bot-col">
+                                    <span class="label-bot-lbl">FECHA</span>
+                                    <span id="preview-fecha" class="label-bot-val">2026-11-26</span>
+                                </div>
+                                <div class="label-bot-col">
+                                    <span class="label-bot-lbl">OPERADOR</span>
+                                    <span id="preview-operador" class="label-bot-val">vlenan</span>
+                                </div>
+                                <div class="label-bot-col">
+                                    <span class="label-bot-lbl">TIEMPO CORRECTO</span>
+                                    <span id="preview-tiempo" class="label-bot-val">8 horas</span>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="label-barcode-box">
-                            <svg id="live-barcode-svg" style="width: 100%; height: 96px;"></svg>
-                        </div>
-                    </div>
-
-                    <div class="label-bot-block">
-                        <div class="label-bot-col">
-                            <span class="label-bot-lbl">FECHA</span>
-                            <span id="preview-fecha" class="label-bot-val">2026-11-26</span>
-                        </div>
-                        <div class="label-bot-col">
-                            <span class="label-bot-lbl">OPERADOR</span>
-                            <span id="preview-operador" class="label-bot-val">vlenan</span>
-                        </div>
-                        <div class="label-bot-col">
-                            <span class="label-bot-lbl">TIEMPO CORRECTO</span>
-                            <span id="preview-tiempo" class="label-bot-val">8 horas</span>
-                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px;">
-                <button type="button" onclick="window.print()" class="btn btn-secondary btn-small">
-                    Imprimir Etiqueta (Carta)
-                </button>
-                <button type="button" onclick="downloadLabelPNG()" class="btn btn-secondary btn-small">
-                    Descargar Etiqueta PNG (Alta Res 1275x1650)
-                </button>
-                <button type="button" onclick="sendLabelByEmail()" class="btn btn-email btn-small">
-                    Enviar por Correo
-                </button>
-            </div>
-        </div>
-
-        <!-- Tabla de Gránulos Registrados -->
-        <div class="card full-width-section">
-            <div class="table-controls">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <h2 class="card-title">Gránulos Registrados</h2>
-                    <span id="granulos-count" class="badge">0</span>
-                </div>
-
-                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <div class="search-box">
-                        <input type="text" id="granulos-search" oninput="renderGranulosTable()" placeholder="Buscar código, color, secador, operador...">
-                    </div>
-                    <button type="button" onclick="exportDashboardExcel()" class="btn btn-primary btn-small">
-                        Descargar Excel (.xls)
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px;">
+                    <button type="button" onclick="window.print()" class="btn btn-secondary btn-small">
+                        Imprimir Etiqueta (Carta)
                     </button>
-                    <button type="button" onclick="exportGranulosCSV()" class="btn btn-secondary btn-small">
-                        Descargar CSV (.csv)
+                    <button type="button" onclick="downloadLabelPNG()" class="btn btn-secondary btn-small">
+                        Descargar Etiqueta PNG
                     </button>
-                    <button type="button" onclick="clearLocalGranulos()" class="btn btn-outline-danger btn-small">
-                        Borrar Todo
+                    <button type="button" onclick="sendLabelByEmail()" class="btn btn-email btn-small">
+                        Enviar por Correo
                     </button>
                 </div>
             </div>
@@ -1210,6 +1270,18 @@
             </div>
         </section>
     </main>
+
+    <!-- Modal de Confirmación Personalizado -->
+    <div id="confirm-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+        <div class="modal-card">
+            <div id="confirm-modal-title" class="modal-title">Confirmar acción</div>
+            <div id="confirm-modal-message" class="modal-body">¿Estás seguro de eliminar este registro?</div>
+            <div class="modal-actions">
+                <button type="button" id="confirm-modal-cancel" class="btn btn-secondary btn-small">Cancelar</button>
+                <button type="button" id="confirm-modal-ok" class="btn btn-outline-danger btn-small" style="background-color: var(--danger); color: #ffffff; border-color: var(--danger);">Eliminar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Contenedor de Notificaciones -->
     <div id="toast-container"></div>
@@ -1852,9 +1924,10 @@
 
                 granulosData.unshift(entry);
                 await persistAllSilent();
+                updateLabelPreview();
                 renderGranulosTable();
                 renderDashboard();
-                showToast(`Gránulo ${codigo} (${color}) guardado internamente.`, 'success');
+                showToast(`Gránulo ${codigo} (${color}) registrado correctamente.`, 'success');
             } catch (err) {
                 showToast('Error al guardar el gránulo: ' + err.message, 'error');
             }
@@ -2280,6 +2353,22 @@
             showToast(`${found.maquina} marcado como Disponible.`, 'success');
         }
 
+        function requestDeleteSecado(id) {
+            const found = secadoData.find(s => s.id === id);
+            if (!found) return;
+            showConfirmModal(
+                'Eliminar registro de secado',
+                `¿Deseas eliminar el registro ${found.codigo} (${found.maquina} - ${found.fecha}) del historial de secado?`,
+                async () => {
+                    secadoData = secadoData.filter(s => s.id !== id);
+                    await persistAllSilent();
+                    renderDryerCards();
+                    renderSecadoTable();
+                    showToast(`Registro de secado ${found.codigo} eliminado.`, 'info');
+                }
+            );
+        }
+
         function renderSecadoTable() {
             const tbody = document.getElementById('secado-tbody');
             const emptyEl = document.getElementById('secado-empty');
@@ -2307,6 +2396,7 @@
             filtered.forEach(s => {
                 const meta = getEntryByColor(s.color);
                 const isBusy = s.estado === 'En Proceso';
+                const safeId = escapeHTML(s.id);
                 const tr = document.createElement('tr');
 
                 tr.innerHTML = `
@@ -2322,11 +2412,14 @@
                     <td>
                         <span class="badge ${isBusy ? 'badge-warning' : 'badge-success'}">${escapeHTML(s.estado)}</span>
                     </td>
-                    <td style="text-align: right;">
-                        ${isBusy
-                            ? `<button type="button" onclick="completeSecado('${escapeHTML(s.id)}')" class="btn btn-secondary btn-small">Completar</button>`
-                            : `<span style="font-size: 12px; color: var(--text-muted);">Listo</span>`
-                        }
+                    <td style="text-align: right; white-space: nowrap;">
+                        <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px;">
+                            ${isBusy
+                                ? `<button type="button" onclick="completeSecado('${safeId}')" class="btn btn-success btn-small">Completar</button>`
+                                : `<span style="font-size: 12px; color: var(--text-muted); padding-right: 4px;">Listo</span>`
+                            }
+                            <button type="button" onclick="requestDeleteSecado('${safeId}')" class="btn btn-outline-danger btn-small">Eliminar</button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -2679,8 +2772,36 @@
         }
 
         /* =============================================================
-           UTILIDADES Y NOTIFICACIONES
+           UTILIDADES, CONFIRMACIÓN Y NOTIFICACIONES
            ============================================================= */
+        function showConfirmModal(title, message, onConfirm) {
+            const modal = document.getElementById('confirm-modal');
+            const titleEl = document.getElementById('confirm-modal-title');
+            const msgEl = document.getElementById('confirm-modal-message');
+            const okBtn = document.getElementById('confirm-modal-ok');
+            const cancelBtn = document.getElementById('confirm-modal-cancel');
+
+            if (!modal || !okBtn || !cancelBtn) return;
+
+            titleEl.textContent = title;
+            msgEl.textContent = message;
+            modal.classList.remove('hidden');
+
+            const close = () => {
+                modal.classList.add('hidden');
+                okBtn.onclick = null;
+                cancelBtn.onclick = null;
+            };
+
+            cancelBtn.onclick = close;
+            okBtn.onclick = async () => {
+                close();
+                if (typeof onConfirm === 'function') {
+                    await onConfirm();
+                }
+            };
+        }
+
         function showToast(msg, type = 'info') {
             const container = document.getElementById('toast-container');
             if (!container) return;
